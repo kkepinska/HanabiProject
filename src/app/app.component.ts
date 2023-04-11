@@ -8,7 +8,13 @@ import { io, Socket } from "socket.io-client";
 })
 
 export class AppComponent {
-  title = 'Hanabi';
+  createRoomText = "Create room"
+  debugText = "---"
+
+  createRoom(arg:any) {
+    this.debugText = "create room"
+    console.log("clicked!\n")
+  }
 
   joinRoom() : void{
     const socket = io('http://localhost:8080');
