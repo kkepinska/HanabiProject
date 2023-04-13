@@ -1,0 +1,3 @@
+<p>Rooms</p>
+<app-room-info *ngFor="let room of roomList" [room] = "room"></app-room-info>
+<app-button [text] = "createRoomText" (clicked)="createNewRoom()"></app-button>
