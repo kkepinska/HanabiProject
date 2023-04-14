@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ClientService } from 'src/app/service/client.service';
 
 @Component({
@@ -10,13 +10,14 @@ import { ClientService } from 'src/app/service/client.service';
 })
 export class LoginComponent implements OnInit {
   msg = ""
-  login : string = "";
-  debug = "";
-  isValid = false;
+  login = "";
+  errorMessage = ""
 
+  isValid = false;
+  
   constructor(
-    private clientService: ClientService,
-    private router: Router
+    private readonly clientService: ClientService,
+    private readonly router: Router
   ) {}
   
   ngOnInit() {
@@ -29,17 +30,16 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl('/lobby', {
           state: { playerName: msg[1]}} )
       } else {
-        this.debug = "Name " + this.login + " is already used"
+        this.errorMessage = "Name " + this.login + " is already used"
       }
     });
   }
 
   onSubmit() : void {
     if (this.validate(this.login)){
-      this.debug = "valid"
       this.clientService.login(this.login)
     } else {
-      this.debug = "Name " + this.login + " is invalid"
+      this.errorMessage = "Name " + this.login + " is invalid"
     }
   }
 

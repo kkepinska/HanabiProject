@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lobby',
@@ -7,19 +7,14 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./lobby.component.scss']
 })
 export class LobbyComponent {
-  createRoomText = "Create room";
-  debugText = "---";
-  userName = "";
-  state? : any;
+  readonly createRoomText = "Create room";
+  readonly userName = "";
+  readonly state? : any;
 
   constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
+    private readonly router: Router
   ) {
     this.state = this.router.getCurrentNavigation()?.extras.state
     this.userName = this.state["playerName"]
-  }
-
-  ngOnInit() {
   }
 }

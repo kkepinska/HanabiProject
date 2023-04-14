@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
+import { Observable, Subject, map } from 'rxjs';
 import { io } from 'socket.io-client';
 import { RoomInfo } from '../model/RoomInfo';
 
@@ -7,8 +7,10 @@ import { RoomInfo } from '../model/RoomInfo';
   providedIn: 'root'
 })
 export class ClientService {
-  private socket = io('http://localhost:8080');
-  public rooms$: Subject<RoomInfo> = new Subject<RoomInfo>();
+  private static SOCKET_PATH = 'http://localhost:8080';
+
+  private readonly socket = io(ClientService.SOCKET_PATH);
+  public readonly rooms$: Subject<RoomInfo> = new Subject<RoomInfo>();
 
   constructor() { }
 
@@ -30,7 +32,7 @@ export class ClientService {
     this.socket.emit('fetchAllRooms');
   }
 
-  public onfetchAllRoomsResponse() {
+  public onFetchAllRoomsResponse() {
     console.log('fetched all rooms in service from server')
     return new Observable<RoomInfo[]>(observer => {
       this.socket.on('fetchAllRooms', msg => {

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RoomInfo } from 'src/app/model/RoomInfo';
 import { ClientService } from 'src/app/service/client.service';
@@ -9,13 +9,13 @@ import { ClientService } from 'src/app/service/client.service';
   styleUrls: ['./room.component.scss']
 })
 export class RoomComponent implements OnInit{
-  roomInfo?: RoomInfo;
-  roomId: number;
-  playerName?: string;
+  readonly roomInfo?: RoomInfo;
+  readonly roomId: number;
+  readonly playerName?: string;
 
   constructor(
-    private router: Router,
-    private clientService: ClientService,
+    private readonly router: Router,
+    private readonly clientService: ClientService,
   ) {
     var state: any = this.router.getCurrentNavigation()?.extras.state
     this.playerName = state["playerName"]
@@ -24,9 +24,8 @@ export class RoomComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.clientService.joinRoom(this.roomId, 
-      this.playerName !== undefined? this.playerName : "check")
+    if (this.playerName !== undefined) {
+      this.clientService.joinRoom(this.roomId, this.playerName)
+    }
   }
-
-  
 }

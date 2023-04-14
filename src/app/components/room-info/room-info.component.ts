@@ -12,10 +12,15 @@ export class RoomInfoComponent {
   @Input() room?: RoomInfo;
   @Input() playerName?: string;
 
-  constructor(private router: Router) {}
+  constructor(
+    private readonly router: Router
+  ) {}
 
   joinRoom() {
     this.router.navigate(['room', this.room?.id],
-    { state: { playerName: this.playerName, roomInfo: this.room }});
+    { state: { 
+      playerName: this.playerName, 
+      roomInfo: this.room 
+    }});
   }
 }

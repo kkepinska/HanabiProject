@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { first } from 'rxjs/operators';
 import { RoomInfo } from 'src/app/model/RoomInfo';
 import { ClientService } from 'src/app/service/client.service';
 
@@ -8,17 +9,18 @@ import { ClientService } from 'src/app/service/client.service';
   styleUrls: ['./room-info-list.component.scss']
 })
 export class RoomInfoListComponent implements OnInit {
+  readonly createRoomText = "create new room";
+
   @Input() playerName?: string;
   roomList: RoomInfo[] = []
-  createRoomText: string = "create new room";
 
   constructor(
-    private clientService: ClientService
+    private readonly clientService: ClientService
   ) {}
 
   ngOnInit(){
     this.clientService.fetchAllRooms();
-    this.clientService.onfetchAllRoomsResponse()
+    this.clientService.onFetchAllRoomsResponse().pipe(first())
       .subscribe((roomInfoList: RoomInfo[]) => this.roomList.push(...roomInfoList))
     this.clientService.getNewRoom().subscribe((roomInfo: RoomInfo) => {
       this.roomList.push(roomInfo);
