@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { RoomInfo } from 'src/app/model/RoomInfo';
 import { ClientService } from 'src/app/service/client.service';
 
@@ -8,6 +8,7 @@ import { ClientService } from 'src/app/service/client.service';
   styleUrls: ['./room-info-list.component.scss']
 })
 export class RoomInfoListComponent implements OnInit {
+  @Input() playerName?: string;
   roomList: RoomInfo[] = [
     { 
       id: 10,
