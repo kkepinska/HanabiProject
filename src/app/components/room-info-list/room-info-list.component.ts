@@ -9,26 +9,7 @@ import { ClientService } from 'src/app/service/client.service';
 })
 export class RoomInfoListComponent implements OnInit {
   @Input() playerName?: string;
-  roomList: RoomInfo[] = [
-    { 
-      id: 10,
-      playerCount : 2,
-      players: ['player1', 'name'],
-      isPublic : true,
-    },
-    { 
-      id: 342,
-      playerCount : 4,
-      players: ['aa', '12player', 'okok', 'bb2'],
-      isPublic : true,
-    },
-    { 
-      id: 993,
-      playerCount : 0,
-      players: [],
-      isPublic : true,
-    },
-  ]
+  roomList: RoomInfo[] = []
   createRoomText: string = "create new room";
 
   constructor(
@@ -36,8 +17,15 @@ export class RoomInfoListComponent implements OnInit {
   ) {}
 
   ngOnInit(){
+    this.clientService.fetchAllRooms();
+    this.clientService.onfetchAllRoomsResponse()
+      .subscribe((roomInfoList: RoomInfo[]) => this.roomList.push(...roomInfoList))
     this.clientService.getNewRoom().subscribe((roomInfo: RoomInfo) => {
       this.roomList.push(roomInfo);
+    })
+    this.clientService.getJoinRoom().subscribe((updatedRoom: RoomInfo) => {
+      this.roomList = this.roomList
+        .map(room => room.id !== updatedRoom.id? room : updatedRoom);
     })
   }
 
