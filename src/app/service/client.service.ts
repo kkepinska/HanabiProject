@@ -19,7 +19,7 @@ export class ClientService {
     console.log("login() in ClientService finished\n")
   }
 
-  onLoginResponse() {
+  onLoginResponse(): Observable<[string, string]> {
     return new Observable<[string, string]>(observer => {
       this.socket.on('login', msg => {
         observer.next(msg);

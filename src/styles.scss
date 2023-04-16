@@ -1,8 +1,78 @@
 /* You can add global styles to this file, and also import other style files */
-:host {
+body {
+    border-color: bisque;
+    border-width: 20px;
     font-style: normal;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: aquamarine;
-    
-    color: blue
-  }
+    text-align: center;
+    vertical-align: middle;
+    align-items: center;
+    form {
+      p {
+        font-size: 40px;
+      }
+      text-align: center;
+      vertical-align: middle;
+      input {
+        width: 60%;
+        font-size: 20px;
+      }
+    }
+    color: blue;
+    button {
+      left: 90%;
+      //align-self: center;
+     // vertical-align: super;
+      background-color: rgb(12, 185, 248);
+      color: rgb(249, 249, 249);
+      font-size: 14px;
+      border:none;
+      border-radius:10px;
+      padding:15px;
+      min-height:30px; 
+      min-width: 120px;
+      text-align: center;
+      &:hover {
+        background-color:#002ead;
+        transition: 0.3s;
+      }
+    }
+
+    p{
+      align-self:baseline;
+    }
+    ul{
+      align-items:start;
+      text-align: center;
+      //vertical-align: middle;
+      height:400px;
+      overflow:hidden; 
+      overflow-y:scroll;
+      
+      button {
+        background-color: rgb(12, 185, 248);
+        color: rgb(249, 249, 249);
+        font-size: 20px;
+        border:none;
+        border-radius:10px;
+        padding:15px;
+        //height:fit-content; 
+        //width: fit-content;
+        width: 10px;
+        text-align: center;
+        //vertical-align: middle;
+        
+        &:hover {
+          background-color:#002ead;
+          transition: 0.3s;
+        }
+      }
+      //position: relative;
+      border-style:solid;
+      //display: flex;
+      //justify-content: center;
+    }
+}
+
+

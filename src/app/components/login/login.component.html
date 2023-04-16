@@ -1,7 +1,10 @@
-<label for="login">Enter your login (4 to 20 characters):</label>
-
-<form (submit)="onSubmit()">
-    <input [(ngModel)]="login" type="text" id="login" name="login" 
-    required minlength="4" maxlength="20" size="10">
- </form>
- <h1>{{errorMessage}}</h1>
+<body>
+    <main>
+        <form (submit)="onSubmit()">
+            <p>Enter your login (4 to 20 characters):</p>
+            <input [(ngModel)]="login" type="text" id="login" name="login" 
+            required minlength="4" maxlength="20" size="20" placeholder="Enter your name">
+        </form>
+        <h1>{{errorMessage}}</h1>
+    </main>
+</body>
