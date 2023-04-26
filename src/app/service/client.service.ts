@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject, map } from 'rxjs';
 import { io } from 'socket.io-client';
 import { RoomInfo } from '../model/RoomInfo';
+import { Gamestate } from '../model/Gamestate';
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +50,18 @@ export class ClientService {
   public joinRoom(roomId: number, playerName: string) {
     console.log('joining room in service')
     this.socket.emit('joinRoom', roomId, playerName);
+  }
+
+  public startGame(gameId: number) {
+    this.socket.emit('startGame', { gameId: gameId });
+  }
+
+  recieveStartGame() {
+    return new Observable<Gamestate>((observer) => {
+      this.socket.on('startGame', (gameState: Gamestate) => {
+        observer.next(gameState);
+      });
+    });
   }
 
   public getNewRoom() {

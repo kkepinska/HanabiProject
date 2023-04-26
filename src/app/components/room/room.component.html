@@ -1,4 +1,18 @@
 <p>room works!</p>
+<button (click)="startGame()">Start game</button>
+
+<ul>
+    <ng-container *ngIf = "gameState">
+        <ng-container *ngFor = "let hand of gameState.hands">
+            <p>next hand!</p>
+            <ng-container *ngFor = "let card of hand.cards">
+                {{ card.rank }}
+                {{ card.color }}
+            </ng-container>
+        </ng-container>
+    </ng-container>
+</ul>
+
 {{roomInfo?.id}}
 {{playerName}}
 {{roomInfo?.players}}

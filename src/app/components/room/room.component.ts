@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Gamestate } from 'src/app/model/Gamestate';
 import { RoomInfo } from 'src/app/model/RoomInfo';
 import { ClientService } from 'src/app/service/client.service';
 
@@ -12,6 +13,7 @@ export class RoomComponent implements OnInit{
   readonly roomInfo?: RoomInfo;
   readonly roomId: number;
   readonly playerName?: string;
+  gameState?: Gamestate; 
 
   constructor(
     private readonly router: Router,
@@ -27,5 +29,17 @@ export class RoomComponent implements OnInit{
     if (this.playerName !== undefined) {
       this.clientService.joinRoom(this.roomId, this.playerName)
     }
+    this.recieveStartGame();
   }
+
+  startGame() {
+    this.clientService.startGame(this.roomId);
+  }
+
+  recieveStartGame() {
+    this.clientService.recieveStartGame().subscribe((gameState: Gamestate) => {
+      this.gameState = gameState;
+    });
+  }
+
 }
