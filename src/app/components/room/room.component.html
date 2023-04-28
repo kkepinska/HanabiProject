@@ -6,8 +6,10 @@
         <ng-container *ngFor = "let hand of gameState.hands">
             <p>next hand!</p>
             <ng-container *ngFor = "let card of hand.cards">
-                {{ card.rank }}
-                {{ card.color }}
+                <button (click)="playCard(hand, card)">
+                    {{ card.rank }}
+                    {{ card.color }}
+                </button>
             </ng-container>
         </ng-container>
     </ng-container>

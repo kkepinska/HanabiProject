@@ -3,6 +3,8 @@ import { Observable, Subject, map } from 'rxjs';
 import { io } from 'socket.io-client';
 import { RoomInfo } from '../model/RoomInfo';
 import { Gamestate } from '../model/Gamestate';
+import { Card } from '../model/Card';
+import { Hand } from '../model/Hand';
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +56,18 @@ export class ClientService {
 
   public startGame(gameId: number) {
     this.socket.emit('startGame', { gameId: gameId });
+  }
+
+  playCard(hand: number, card: number, gameId: number) {
+    this.socket.emit('playCard', { hand: hand, card: card, gameId: gameId});
+  }
+
+  recieveUpdate() {
+    return new Observable<Gamestate>((observer) => {
+      this.socket.on('update', (gameState: Gamestate) => {
+        observer.next(gameState);
+      });
+    });
   }
 
   recieveStartGame() {
