@@ -1,20 +1,39 @@
 <p>room works!</p>
-<button (click)="startGame()">Start game</button>
+<button *ngIf = "gameState == undefined" (click)="startGame()">Start game</button>
 
 <ul>
-    <ng-container *ngIf = "gameState">
-        <ng-container *ngFor = "let hand of gameState.hands">
-            <p>next hand!</p>
-            <ng-container *ngFor = "let card of hand.cards">
-                <button (click)="playCard(hand, card)">
-                    {{ card.rank }}
-                    {{ card.color }}
-                </button>
-            </ng-container>
+    <ng-container *ngIf = "gameState !== undefined">
+        <ng-container *ngFor = "let player of roomInfo?.players">
+                <ng-container *ngIf = "player !== playerName">
+                    <h2>{{ player }}</h2>
+                    <ng-container *ngFor = "let card of getCards(player)">
+                        <div>
+                            rank: {{ card.rank }}
+                            color: {{ card.color }}
+                            possible colors: {{ card.colorKlowleadge }}
+                            possible ranks: {{ card.rankKlowleadge }}
+                        </div>
+                    </ng-container>
+                </ng-container>
         </ng-container>
     </ng-container>
 </ul>
 
-{{roomInfo?.id}}
+<h1>{{ playerName }}</h1>
+<ng-container *ngFor = "let card of getCards(playerName)">
+    <div>
+        rank: {{ card.rank }}
+        color: {{ card.color }}
+        possible colors: {{ card.colorKlowleadge }}
+        possible ranks: {{ card.rankKlowleadge }}
+    </div>
+</ng-container>
+
+<h2>current player: {{ gameState?.currentPlayer }}</h2>
+
+
+is gameState undefined: {{gameState === undefined}}
+{{roomInfo.id}}
 {{playerName}}
-{{roomInfo?.players}}
+<br>
+[ {{roomInfo.players}} ]

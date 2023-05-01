@@ -12,10 +12,12 @@ import { ClientService } from 'src/app/service/client.service';
   styleUrls: ['./room.component.scss']
 })
 export class RoomComponent implements OnInit{
-  readonly roomInfo?: RoomInfo;
+  roomInfo: RoomInfo;
   readonly roomId: number;
-  readonly playerName?: string;
-  gameState?: Gamestate; 
+  readonly playerName: string;
+  gameState?: Gamestate;
+  playerHand?: Hand;
+  hands?: Map<string, Hand>;
 
   constructor(
     private readonly router: Router,
@@ -31,8 +33,15 @@ export class RoomComponent implements OnInit{
     if (this.playerName !== undefined) {
       this.clientService.joinRoom(this.roomId, this.playerName)
     }
+    this.receiveGetPlayers();
     this.recieveStartGame();
     this.receiveUpdate();
+  }
+
+  receiveGetPlayers() {
+    this.clientService.receiveUpdateRoom().subscribe((roomInfo: RoomInfo) => {
+      this.roomInfo = roomInfo;
+    })
   }
 
   startGame() {
@@ -40,22 +49,72 @@ export class RoomComponent implements OnInit{
   }
 
   recieveStartGame() {
-    this.clientService.recieveStartGame().subscribe((gameState: Gamestate) => {
-      this.gameState = gameState;
+    this.clientService.recieveStartGame().subscribe((msg: [Gamestate, Array<[string, Hand]>]) => {
+      console.log("Room ", this.roomId, " received gameState in startGame")
+      let gameState = msg[0]
+      let handsArray = msg[1]
+      console.log(gameState)
+      console.log("handsArray:")
+      console.log(handsArray)
+      let hands = new Map<string, Hand>()
+      for(let entry of handsArray) {
+        let player = entry[0]
+        let hand = entry[1]
+        hands.set(player, hand)
+      }
+      this.gameState = {
+        gameInfo: gameState.gameInfo,
+        hands: hands,
+        deck: gameState.deck,
+        discard: gameState.discard,
+        availableHints: gameState.availableHints,
+        currentScore: gameState.currentScore,
+        lifeTokens: gameState.lifeTokens,
+        currentPlayer: gameState.currentPlayer
+      }
+      console.log(this.gameState.hands)
+      let allHands = this.gameState.hands
+      this.playerHand = allHands.get(this.playerName)
+      this.hands = allHands
     });
   }
 
-  playCard(hand: Hand, card: Card) {
-    let pl = 0
-    if(this.gameState != undefined)
-      pl = this.gameState.hands.indexOf(hand)
-    let pos = hand.cards.indexOf(card)
-    this.clientService.playCard(pl, pos, this.roomId);
+  getCards(player: string): Array<Card> {
+    if (this.gameState === undefined || this.gameState?.hands === undefined) {
+      return [{rank: 2, color: 10, colorKlowleadge: [], rankKlowleadge: []}]
+    }
+    let hand = this.gameState.hands.get(player)
+    if (hand === undefined) {
+      return [{rank: 2, color: 10, colorKlowleadge: [], rankKlowleadge: []}]
+    }
+    if (hand.cards.length === 0) {
+      return [{rank: 9090, color: 1013, colorKlowleadge: [], rankKlowleadge: []}]
+    }
+    return hand.cards
+  }
+
+  playCard(card: Card) {
+    if (this.playerHand === undefined) {
+      return;
+    }
+    let cardIdx = this.playerHand?.cards.indexOf(card)
+    this.clientService.playCard(this.playerName, cardIdx, this.roomId);
+  }
+
+  discardCard(card: Card) {
+    if (this.playerHand === undefined) {
+      return;
+    }
+    let cardIdx = this.playerHand?.cards.indexOf(card)
+    this.clientService.discardCard(this.playerName, cardIdx, this.roomId);
   }
 
   receiveUpdate() {
     this.clientService.recieveUpdate().subscribe((gameState: Gamestate) => {
       this.gameState = gameState;
+      let allHands = gameState.hands
+      this.playerHand = allHands?.get(this.playerName)
+      this.hands = allHands
     });
   }
 

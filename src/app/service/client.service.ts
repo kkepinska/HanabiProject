@@ -3,7 +3,6 @@ import { Observable, Subject, map } from 'rxjs';
 import { io } from 'socket.io-client';
 import { RoomInfo } from '../model/RoomInfo';
 import { Gamestate } from '../model/Gamestate';
-import { Card } from '../model/Card';
 import { Hand } from '../model/Hand';
 
 @Injectable({
@@ -54,30 +53,6 @@ export class ClientService {
     this.socket.emit('joinRoom', roomId, playerName);
   }
 
-  public startGame(gameId: number) {
-    this.socket.emit('startGame', { gameId: gameId });
-  }
-
-  playCard(hand: number, card: number, gameId: number) {
-    this.socket.emit('playCard', { hand: hand, card: card, gameId: gameId});
-  }
-
-  recieveUpdate() {
-    return new Observable<Gamestate>((observer) => {
-      this.socket.on('update', (gameState: Gamestate) => {
-        observer.next(gameState);
-      });
-    });
-  }
-
-  recieveStartGame() {
-    return new Observable<Gamestate>((observer) => {
-      this.socket.on('startGame', (gameState: Gamestate) => {
-        observer.next(gameState);
-      });
-    });
-  }
-
   public getNewRoom() {
     this.socket.on('newRoom', (roomInfo: RoomInfo) =>{
       this.rooms$.next(roomInfo);
@@ -93,4 +68,51 @@ export class ClientService {
     });
     return this.rooms$.asObservable();
   };
+
+  public receiveUpdateRoom() {
+    return new Observable<RoomInfo>((observer) => {
+      this.socket.on('updateRoom', (roomInfo: RoomInfo) => {
+        observer.next(roomInfo);
+      });
+    });
+  }
+
+  public startGame(gameId: number) {
+    this.socket.emit('startGame', gameId);
+  }
+
+  recieveStartGame() {
+    return new Observable<[Gamestate, Array<[string, Hand]>]>((observer) => {
+      this.socket.on('startGame', (msg: [Gamestate, Array<[string, Hand]>]) => {
+        let gameState = msg[0]
+        let handsArray = msg[1]
+        console.log("service got start game")
+        console.log(gameState)
+        console.log("handsArray:")
+        console.log(handsArray)
+        observer.next([gameState, handsArray]);
+      });
+    });
+  }
+
+  playCard(player: string, cardIdx: number, gameId: number) {
+    this.socket.emit('playCard', player, cardIdx, gameId);
+  }
+
+  discardCard(player: string, cardIdx: number, gameId: number) {
+    this.socket.emit('discardCard', player, cardIdx, gameId);
+  }
+
+  hintCard(player: string, receiver: string, 
+    hintType: ("rank" | "color"), hintValue: number, gameId: number) {
+    this.socket.emit('hintCard', player, receiver, hintType, hintValue, gameId);
+  }
+
+  recieveUpdate() {
+    return new Observable<Gamestate>((observer) => {
+      this.socket.on('update', (gameState: Gamestate) => {
+        observer.next(gameState);
+      });
+    });
+  }
 }
