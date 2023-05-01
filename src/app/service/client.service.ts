@@ -109,9 +109,15 @@ export class ClientService {
   }
 
   recieveUpdate() {
-    return new Observable<Gamestate>((observer) => {
-      this.socket.on('update', (gameState: Gamestate) => {
-        observer.next(gameState);
+    return new Observable<[Gamestate, Array<[string, Hand]>]>((observer) => {
+      this.socket.on('update', (msg: [Gamestate, Array<[string, Hand]>]) => {
+        let gameState = msg[0]
+        let handsArray = msg[1]
+        console.log("service got update game")
+        console.log(gameState)
+        console.log("handsArray:")
+        console.log(handsArray)
+        observer.next([gameState, handsArray]);
       });
     });
   }

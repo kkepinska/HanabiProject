@@ -26,11 +26,15 @@
         color: {{ card.color }}
         possible colors: {{ card.colorKlowleadge }}
         possible ranks: {{ card.rankKlowleadge }}
+        <ng-container *ngIf = "gameState?.currentPlayer === playerName">
+            <button (click)="playCard(card)">play</button>
+            <button (click)="discardCard(card)">discard</button>
+        </ng-container>
     </div>
 </ng-container>
 
 <h2>current player: {{ gameState?.currentPlayer }}</h2>
-
+<h2>is current: {{ gameState?.currentPlayer === playerName }}</h2>
 
 is gameState undefined: {{gameState === undefined}}
 {{roomInfo.id}}

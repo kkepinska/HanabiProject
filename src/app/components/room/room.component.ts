@@ -53,42 +53,44 @@ export class RoomComponent implements OnInit{
       console.log("Room ", this.roomId, " received gameState in startGame")
       let gameState = msg[0]
       let handsArray = msg[1]
-      console.log(gameState)
-      console.log("handsArray:")
-      console.log(handsArray)
-      let hands = new Map<string, Hand>()
-      for(let entry of handsArray) {
-        let player = entry[0]
-        let hand = entry[1]
-        hands.set(player, hand)
-      }
-      this.gameState = {
-        gameInfo: gameState.gameInfo,
-        hands: hands,
-        deck: gameState.deck,
-        discard: gameState.discard,
-        availableHints: gameState.availableHints,
-        currentScore: gameState.currentScore,
-        lifeTokens: gameState.lifeTokens,
-        currentPlayer: gameState.currentPlayer
-      }
-      console.log(this.gameState.hands)
-      let allHands = this.gameState.hands
-      this.playerHand = allHands.get(this.playerName)
-      this.hands = allHands
+      this.setGameState(gameState, handsArray)
     });
+  }
+
+  private setGameState(gameState: Gamestate, handsArray: Array<[string, Hand]>) {
+    console.log(gameState)
+    console.log("handsArray:")
+    console.log(handsArray)
+    
+    let hands = new Map<string, Hand>()
+    for(let entry of handsArray) {
+      let player = entry[0]
+      let hand = entry[1]
+      hands.set(player, hand)
+    }
+    this.gameState = {
+      gameInfo: gameState.gameInfo,
+      hands: hands,
+      deck: gameState.deck,
+      discard: gameState.discard,
+      availableHints: gameState.availableHints,
+      currentScore: gameState.currentScore,
+      lifeTokens: gameState.lifeTokens,
+      currentPlayer: gameState.currentPlayer
+    }
+    console.log(this.gameState.hands)
+    let allHands = this.gameState.hands
+    this.playerHand = allHands.get(this.playerName)
+    this.hands = allHands
   }
 
   getCards(player: string): Array<Card> {
     if (this.gameState === undefined || this.gameState?.hands === undefined) {
-      return [{rank: 2, color: 10, colorKlowleadge: [], rankKlowleadge: []}]
+      return []
     }
     let hand = this.gameState.hands.get(player)
-    if (hand === undefined) {
-      return [{rank: 2, color: 10, colorKlowleadge: [], rankKlowleadge: []}]
-    }
-    if (hand.cards.length === 0) {
-      return [{rank: 9090, color: 1013, colorKlowleadge: [], rankKlowleadge: []}]
+    if (hand === undefined || hand.cards.length === 0) {
+      return []
     }
     return hand.cards
   }
@@ -110,11 +112,11 @@ export class RoomComponent implements OnInit{
   }
 
   receiveUpdate() {
-    this.clientService.recieveUpdate().subscribe((gameState: Gamestate) => {
-      this.gameState = gameState;
-      let allHands = gameState.hands
-      this.playerHand = allHands?.get(this.playerName)
-      this.hands = allHands
+    this.clientService.recieveUpdate().subscribe((msg: [Gamestate, Array<[string, Hand]>]) => {
+      console.log("Room ", this.roomId, " received gameState in startGame")
+      let gameState = msg[0]
+      let handsArray = msg[1]
+      this.setGameState(gameState, handsArray)
     });
   }
 
