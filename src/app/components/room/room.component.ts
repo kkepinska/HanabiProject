@@ -18,6 +18,8 @@ export class RoomComponent implements OnInit{
   gameState?: Gamestate;
   playerHand?: Hand;
   hands?: Map<string, Hand>;
+  rank = 0
+  color = 0
 
   constructor(
     private readonly router: Router,
@@ -111,6 +113,10 @@ export class RoomComponent implements OnInit{
     this.clientService.discardCard(this.playerName, cardIdx, this.roomId);
   }
 
+  hintCard(receiver: string, hintType: ("rank" | "color"), hintValue: number) {
+    this.clientService.hintCard(this.playerName, receiver, hintType, hintValue, this.roomId);
+  }
+
   receiveUpdate() {
     this.clientService.recieveUpdate().subscribe((msg: [Gamestate, Array<[string, Hand]>]) => {
       console.log("Room ", this.roomId, " received gameState in startGame")
@@ -120,4 +126,11 @@ export class RoomComponent implements OnInit{
     });
   }
 
+  onSelectedRank(rank: string) {
+    this.rank = Number(rank)
+  }
+
+  onSelectedColor(color: string) {
+    this.color = Number(color)
+  }
 }

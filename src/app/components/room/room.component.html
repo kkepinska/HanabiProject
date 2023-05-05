@@ -12,6 +12,24 @@
                             color: {{ card.color }}
                             possible colors: {{ card.colorKlowleadge }}
                             possible ranks: {{ card.rankKlowleadge }}
+                            <ng-container *ngIf = "gameState?.currentPlayer === playerName">
+                                <button (click)="hintCard(player, 'rank', rank)">hint rank</button>
+                                <select #ranks (change)="onSelectedRank(ranks.value)">
+                                    <option default>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                                <button (click)="hintCard(player, 'color', color)">hint color</button>
+                                <select #colors (change)="onSelectedColor(colors.value)">
+                                    <option default>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </ng-container>
                         </div>
                     </ng-container>
                 </ng-container>
