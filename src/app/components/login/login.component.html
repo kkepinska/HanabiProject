@@ -1,20 +1,10 @@
 <body>
     <main>
         <form (submit)="onSubmit()">
-            <p>Enter your login (4 to 20 characters):</p>
+            <p>Enter your login:</p>
             <input [(ngModel)]="login" type="text" id="login" name="login" 
             required minlength="4" maxlength="20" size="20" placeholder="Enter your name">
         </form>
         <h1>{{errorMessage}}</h1>
     </main>
-    <select>
-        <option value="">--Please choose an option--</option>
-        <option value="dog">Dog</option>
-        <option value="cat">Cat</option>
-        <option value="hamster">Hamster</option>
-        <option value="parrot">Parrot</option>
-        <option value="spider">Spider</option>
-        <option value="goldfish">Goldfish</option>
-    </select>
-    
 </body>

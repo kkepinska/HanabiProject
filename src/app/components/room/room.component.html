@@ -1,4 +1,3 @@
-<p>room works!</p>
 <button *ngIf = "gameState == undefined" (click)="startGame()">Start game</button>
 
 <ul>
@@ -40,8 +39,6 @@
 <h1>{{ playerName }}</h1>
 <ng-container *ngFor = "let card of getCards(playerName)">
     <div>
-        rank: {{ card.rank }}
-        color: {{ card.color }}
         possible colors: {{ card.colorKlowleadge }}
         possible ranks: {{ card.rankKlowleadge }}
         <ng-container *ngIf = "gameState?.currentPlayer === playerName">
@@ -51,11 +48,8 @@
     </div>
 </ng-container>
 
-<h2>current player: {{ gameState?.currentPlayer }}</h2>
-<h2>is current: {{ gameState?.currentPlayer === playerName }}</h2>
-
-is gameState undefined: {{gameState === undefined}}
-{{roomInfo.id}}
-{{playerName}}
-<br>
-[ {{roomInfo.players}} ]
+<ng-container *ngIf = "gameState !== undefined">
+    <h1>current player: {{ gameState?.currentPlayer }}</h1>
+    <h2>score: {{ gameState?.currentScore }} </h2>
+    <h2>hints left: {{ gameState?.availableHints }} </h2>
+</ng-container>
