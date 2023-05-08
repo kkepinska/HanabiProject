@@ -20,6 +20,7 @@ export class RoomComponent implements OnInit{
   hands?: Map<string, Hand>;
   rank = 0
   color = 0
+  colors = ['red', 'green', 'blue', 'yellow', 'orange']
 
   constructor(
     private readonly router: Router,
@@ -131,6 +132,14 @@ export class RoomComponent implements OnInit{
   }
 
   onSelectedColor(color: string) {
-    this.color = Number(color)
+    this.color = this.colors.indexOf(color) + 1
+  }
+
+  getColorNames(colorNumbers: Array<number>) : Array<string> {
+    return colorNumbers.map(c => this.getColorName(c))
+  }
+
+  getColorName(colorNumber: number): string {
+    return this.colors[colorNumber - 1]
   }
 }
