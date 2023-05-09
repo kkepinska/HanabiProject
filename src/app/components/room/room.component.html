@@ -25,8 +25,8 @@
                         <div>
                             rank: {{ card.rank }}
                             color: {{ getColorName(card.color) }}
-                            possible ranks: {{ card.rankKlowleadge }}
-                            possible colors: {{ getColorNames(card.colorKlowleadge) }}
+                            possible ranks: {{ card.rankKnowledge }}
+                            possible colors: {{ getColorNames(card.colorKnowledge) }}
                         </div>
                     </ng-container>
                 </ng-container>
@@ -37,8 +37,8 @@
 <h1>{{ playerName }}</h1>
 <ng-container *ngFor = "let card of getCards(playerName)">
     <div>
-        possible ranks: {{ card.rankKlowleadge }}
-        possible colors: {{ getColorNames(card.colorKlowleadge) }}
+        possible ranks: {{ card.rankKnowledge }}
+        possible colors: {{ getColorNames(card.colorKnowledge) }}
         <ng-container *ngIf = "gameState?.currentPlayer === playerName">
             <button (click)="playCard(card)">play</button>
             <button (click)="discardCard(card)">discard</button>
