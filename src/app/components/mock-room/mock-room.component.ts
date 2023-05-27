@@ -1,16 +1,17 @@
-import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Card } from 'src/app/model/Card';
 import { GameInfo } from 'src/app/model/GameInfo';
 import { Gamestate } from 'src/app/model/Gamestate';
 import { Hand } from 'src/app/model/Hand';
 import { RoomInfo } from 'src/app/model/RoomInfo';
+import { color } from 'src/app/model/colors';
 
 @Component({
   selector: 'app-mock-room',
   templateUrl: './mock-room.component.html',
   styleUrls: ['./mock-room.component.scss']
 })
-export class MockRoomComponent {
+export class MockRoomComponent implements OnInit{
   private static ROOM_INFO : RoomInfo = {
     id : 124,
     playerCount : 3,
@@ -21,24 +22,29 @@ export class MockRoomComponent {
     maxHints: 8,
     handSize: 5,
     numberOfPlayers: 3,
-    numberOfColors: 5
+    setOfColors: new Set<color>([color.RED, color.GREEN, color.BLUE, color.YELLOW, color.WHITE]),
+    raindbowCritical: false,
+    blackCritical: false
   }
-
+  
   roomInfo: RoomInfo;
   readonly roomId: number;
   readonly playerName: string;
   gameState?: Gamestate;
   playerHand?: Hand;
   hands?: Map<string, Hand>;
-  rank = 0
-  color = 0
-  colors = ['red', 'green', 'blue', 'yellow', 'white']
+
+  colors = ['red', 'green', 'white', 'blue', 'yellow']
+  colorsEnum = [color.RED, color.GREEN, color.BLUE, color.YELLOW, color.WHITE]
   ranks = [1, 2, 3, 4, 5]
 
   constructor() {
     this.playerName = 'Player 1'
     this.roomInfo = MockRoomComponent.ROOM_INFO
     this.roomId = 124
+  }
+
+  ngOnInit(): void {
     this.playerHand = this.getHands().get(this.playerName)
     this.gameState = {
         gameInfo: MockRoomComponent.GAME_INFO,
@@ -48,7 +54,8 @@ export class MockRoomComponent {
         availableHints: 8,
         currentScore: [0,2,4,0,10],
         lifeTokens: 10,
-        currentPlayer: this.playerName
+        currentPlayer: this.playerName,
+        history: []
     }
   }
 
@@ -63,33 +70,33 @@ export class MockRoomComponent {
   getCards(player: string): Array<Card> {
     return [
       {
-        color: this.getRandom(),
+        color: this.colorsEnum[this.getRandom() - 1],
         rank: this.getRandom(),
-        colorKnowledge: [1,3,4,5],
+        colorKnowledge: [color.RED, color.GREEN, color.BLUE, color.YELLOW],
         rankKnowledge: [3,4,5],
       },
       {
-        color: this.getRandom(),
+        color: this.colorsEnum[this.getRandom() - 1],
         rank: this.getRandom(),
-        colorKnowledge: [1,2,3,4,5],
+        colorKnowledge: [color.GREEN, color.BLUE, color.WHITE],
         rankKnowledge: [1,2,3,4,5],
       },
       {
-        color: this.getRandom(),
+        color: this.colorsEnum[this.getRandom() - 1],
         rank: this.getRandom(),
-        colorKnowledge: [1,2,4],
+        colorKnowledge: [color.RED, color.GREEN, color.BLUE, color.YELLOW, color.WHITE],
         rankKnowledge: [2,4,5],
       },
       {
-        color: this.getRandom(),
+        color: this.colorsEnum[this.getRandom() - 1],
         rank: this.getRandom(),
-        colorKnowledge: [1,3,5],
+        colorKnowledge: [color.RED, color.YELLOW, color.WHITE],
         rankKnowledge: [3,4],
       },
       {
-        color: this.getRandom(),
+        color: this.colorsEnum[this.getRandom() - 1],
         rank: this.getRandom(),
-        colorKnowledge: [2,5],
+        colorKnowledge: [color.BLUE, color.YELLOW,],
         rankKnowledge: [1,2,5],
       },
     ]
@@ -122,14 +129,6 @@ export class MockRoomComponent {
 
   hintCard(receiver: string, hintType: ("rank" | "color"), hintValue: number) {
     console.log('hintCard', this.playerName, receiver, hintType, hintValue, this.roomId)
-  }
-
-  onSelectedRank(rank: string) {
-    this.rank = Number(rank)
-  }
-
-  onSelectedColor(color: string) {
-    this.color = this.colors.indexOf(color) + 1
   }
 
   getColorNames(colorNumbers: Array<number>) : Array<string> {

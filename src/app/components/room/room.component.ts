@@ -18,9 +18,8 @@ export class RoomComponent implements OnInit{
   gameState?: Gamestate;
   playerHand?: Hand;
   hands?: Map<string, Hand>;
-  rank = 0
-  color = 0
-  colors = ['red', 'green', 'blue', 'yellow', 'orange']
+
+  colors = ['red', 'green', 'white', 'blue', 'yellow']
   ranks = [1, 2, 3, 4, 5]
 
   constructor(
@@ -80,9 +79,12 @@ export class RoomComponent implements OnInit{
       availableHints: gameState.availableHints,
       currentScore: gameState.currentScore,
       lifeTokens: gameState.lifeTokens,
-      currentPlayer: gameState.currentPlayer
+      currentPlayer: gameState.currentPlayer,
+      history: gameState.history
     }
     console.log(this.gameState.hands)
+    console.log("History: \n", this.gameState.history)
+
     let allHands = this.gameState.hands
     this.playerHand = allHands.get(this.playerName)
     this.hands = allHands
@@ -104,6 +106,7 @@ export class RoomComponent implements OnInit{
       return;
     }
     let cardIdx = this.playerHand?.cards.indexOf(card)
+    console.log('playCard', this.playerName, cardIdx, this.roomId)
     this.clientService.playCard(this.playerName, cardIdx, this.roomId);
   }
 
@@ -112,10 +115,12 @@ export class RoomComponent implements OnInit{
       return;
     }
     let cardIdx = this.playerHand?.cards.indexOf(card)
+    console.log('discardCard', this.playerName, cardIdx, this.roomId);
     this.clientService.discardCard(this.playerName, cardIdx, this.roomId);
   }
 
   hintCard(receiver: string, hintType: ("rank" | "color"), hintValue: number) {
+    console.log('hintCard', this.playerName, receiver, hintType, hintValue, this.roomId)
     this.clientService.hintCard(this.playerName, receiver, hintType, hintValue, this.roomId);
   }
 

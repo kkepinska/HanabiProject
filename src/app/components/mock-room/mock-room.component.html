@@ -28,7 +28,6 @@
                             <ng-container *ngFor = "let card of getCards(player)">
                                 <div class="col">
                                     <img class="img-responsive" src="assets/images/{{card.color}}{{card.rank}}.png">
-                            
                                 </div>
                             </ng-container>
                         </div>
@@ -49,8 +48,8 @@
                                         <button class="btn btn-primary dropdown-toggle me-2"  data-bs-toggle="dropdown">hint color</button>
                                         <div class="dropdown-menu">
                                             <div class="btn-group btn-group-lg">
-                                                <ng-container *ngFor = "let colorName of colors">
-                                                    <button [className]="getClassName(colorName)" (click)="hintCard(player, 'color', 2)">
+                                                <ng-container *ngFor = "let colorName of colors; let i = index">
+                                                    <button [className]="getClassName(colorName)" (click)="hintCard(player, 'color', i + 1)">
                                                         &#10003;
                                                     </button>
                                                 </ng-container>
