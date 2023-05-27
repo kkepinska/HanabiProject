@@ -1,78 +1,101 @@
-/* You can add global styles to this file, and also import other style files */
-body {
-    border-color: bisque;
-    border-width: 20px;
-    font-style: normal;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    background-color: aquamarine;
-    text-align: center;
-    vertical-align: middle;
-    align-items: center;
-    form {
-      p {
-        font-size: 40px;
-      }
-      text-align: center;
-      vertical-align: middle;
-      input {
-        width: 60%;
-        font-size: 20px;
-      }
-    }
-    color: blue;
-    button {
-      left: 90%;
-      //align-self: center;
-     // vertical-align: super;
-      background-color: rgb(12, 185, 248);
-      color: rgb(249, 249, 249);
-      font-size: 14px;
-      border:none;
-      border-radius:10px;
-      padding:15px;
-      min-height:30px; 
-      min-width: 120px;
-      text-align: center;
-      &:hover {
-        background-color:#002ead;
-        transition: 0.3s;
-      }
-    }
+$bg-green: #37d684;
+$body-bg: #1ce0dc;
+$secondary: #e8f597;
 
-    p{
-      align-self:baseline;
+$card-red: rgb(251, 0, 6);
+$card-green: rgb(27, 167, 2);
+$card-blue: rgb(17, 138, 227);
+$card-yellow: rgb(247, 182, 8);
+$card-white: rgb(255, 255, 255);
+
+$primary: $bg-green;
+
+@import '../node_modules/bootstrap/scss/bootstrap';
+@import "~bootstrap/dist/css/bootstrap.css";
+
+.card-red{
+    @extend .btn;
+    color: $card-red;
+    background-color: $card-red;
+    &:hover{
+        background-color: darken($card-red, 5%)
     }
-    ul{
-      align-items:start;
-      text-align: center;
-      //vertical-align: middle;
-      height:400px;
-      overflow:hidden; 
-      overflow-y:scroll;
-      
-      button {
-        background-color: rgb(12, 185, 248);
-        color: rgb(249, 249, 249);
-        font-size: 20px;
-        border:none;
-        border-radius:10px;
-        padding:15px;
-        //height:fit-content; 
-        //width: fit-content;
-        width: 10px;
-        text-align: center;
-        //vertical-align: middle;
-        
-        &:hover {
-          background-color:#002ead;
-          transition: 0.3s;
-        }
-      }
-      //position: relative;
-      border-style:solid;
-      //display: flex;
-      //justify-content: center;
+}
+.card-green{
+    @extend .btn;
+    color: $card-green;
+    background-color: $card-green;
+    &:hover{
+        background-color: darken($card-green, 5%)
+    }
+}
+.card-blue{
+    @extend .btn;
+    color: $card-blue;
+    background-color: $card-blue;
+    &:hover{
+        background-color: darken($card-blue, 5%)
+    }
+}
+.card-yellow{
+    @extend .btn;
+    color: $card-yellow;
+    background-color: $card-yellow;
+    &:hover{
+        background-color: darken($card-yellow, 5%)
+    }
+}
+.card-white{
+    @extend .btn;
+    color: $card-white;
+    background-color: $card-white;
+    &:hover{
+        background-color: darken($card-white, 5%)
     }
 }
 
-
+.card-red-lg{
+    @extend .btn;
+    @extend .btn-lg;
+    @extend .me-2;
+    &:disabled{
+        color: $card-red;
+        background-color: $card-red;
+    }
+}
+.card-green-lg{
+    @extend .btn;
+    @extend .btn-lg;
+    @extend .me-2;
+    &:disabled{
+        color: $card-green;
+        background-color: $card-green;
+    }
+}
+.card-blue-lg{
+    @extend .btn;
+    @extend .btn-lg;
+    @extend .me-2;
+    &:disabled{
+        color: $card-blue;
+        background-color: $card-blue;
+    }
+}
+.card-yellow-lg{
+    @extend .btn;
+    @extend .btn-lg;
+    @extend .me-2;
+    &:disabled{
+        color: $card-yellow;
+        background-color: $card-yellow;
+    }
+}
+.card-white-lg{
+    @extend .btn;
+    @extend .btn-lg;
+    @extend .me-2;
+    &:disabled{
+        color: $card-white;
+        background-color: $card-white;
+    }
+}

@@ -1,0 +1,110 @@
+<button *ngIf = "gameState == undefined">Start game</button>
+<ng-container *ngIf = "gameState !== undefined">
+    <div class="site-header sticky-top bg-primary px-2 py-3">
+        <div class="row">
+            <div class="col-xl-6 col-lg-5 col">
+                <p class="h3 text-secondary">&nbsp;&nbsp;&nbsp;&nbsp;Current player: {{ gameState.currentPlayer}}</p>
+            </div>
+            <div class="col-xl-2 col-lg-2 col">
+                <p class="h4 text-secondary">Available hints: {{ gameState.availableHints }}</p>
+            </div>
+            <div class="col-xl-2 col-lg-3 col">
+                <p class="h4 text-secondary">Score: {{ gameState.currentScore }}</p>
+            </div>
+            <div class="col-xl-2 col-lg-1 col">
+                <p class="h4 text-secondary">Lives: {{gameState.lifeTokens}}</p>
+            </div>
+        </div>
+    </div>
+</ng-container>
+<div class="container-fluid px-5">
+    <ng-container *ngIf = "gameState !== undefined">
+        <div class = "row gy-4 py-4">
+            <ng-container *ngFor = "let player of roomInfo?.players">
+                <ng-container *ngIf = "player !== playerName">
+                    <div class="col-12 col-md-6 col-xxl-4 px-4">
+                        <p class="h3">{{ player }}</p>
+                        <div class="row flex-nowrap gx-2 py-2">
+                            <ng-container *ngFor = "let card of getCards(player)">
+                                <div class="col">
+                                    <img class="img-responsive" src="assets/images/{{card.color}}{{card.rank}}.png">
+                            
+                                </div>
+                            </ng-container>
+                        </div>
+                        <ng-container *ngIf = "gameState?.currentPlayer === playerName">
+                            <div class="btn-group">
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle me-2"  data-bs-toggle="dropdown">hint rank</button>
+                                    <div class="dropdown-menu center-block">
+                                        <ng-container *ngFor = "let rankName of ranks">
+                                            <button class="dropdown-item" (click)="hintCard(player, 'rank', rankName)">
+                                                {{ rankName }}
+                                            </button>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="dropdown">
+                                        <button class="btn btn-primary dropdown-toggle me-2"  data-bs-toggle="dropdown">hint color</button>
+                                        <div class="dropdown-menu">
+                                            <div class="btn-group btn-group-lg">
+                                                <ng-container *ngFor = "let colorName of colors">
+                                                    <button [className]="getClassName(colorName)" (click)="hintCard(player, 'color', 2)">
+                                                        &#10003;
+                                                    </button>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </ng-container>
+            </ng-container>
+        </div>
+        <br>
+        <p class="h2 text-secondary">Your cards</p>
+        <div class="row p-4 g-4">
+            <ng-container *ngFor = "let card of getCards(playerName); let i = index">
+                <div class="col-12 col-xl-6">
+                    <p class="h3">Card {{ i + 1 }}</p>
+                    <div class="row g-2 p-1">
+                        <div class="col-xl-6 col-lg-4 col-sm-6">
+                            <p class="h5">Possible ranks:</p>
+                            <div class="d-flex flex-row">
+                                <ng-container *ngFor = "let rank of card.rankKnowledge">
+                                    <div class="d-flex flex-column">
+                                        <button class="btn btn-primary btn-lg me-1" disabled="true">
+                                            {{ rank }}
+                                        </button>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-4 col-sm-6">
+                            <p class="h5">Possible colors:</p>
+                            <div class="d-flex flex-row">
+                                <ng-container *ngFor = "let color of card.colorKnowledge">
+                                    <div class="d-flex flex-column">
+                                        <button [className]="getLgClassName(getColorName(color))" disabled="true">
+                                            O
+                                        </button>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="col-xl-12 col-lg-4 col-sm-12 d-flex align-items-center">
+                            <ng-container *ngIf = "gameState?.currentPlayer === playerName">
+                                <button class="btn btn-primary btn-lg me-3" (click)="playCard(card)">play</button>
+                                <button class="btn btn-primary btn-lg me-3" (click)="discardCard(card)">discard</button>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div> 
+    </ng-container>
+</div>
+

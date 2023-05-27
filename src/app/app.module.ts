@@ -12,6 +12,7 @@ import { LoginComponent } from './components/login/login.component';
 import { LobbyComponent } from './components/lobby/lobby.component';
 import { RoomInfoComponent } from './components/room-info/room-info.component';
 import { RoomInfoListComponent } from './components/room-info-list/room-info-list.component';
+import { MockRoomComponent } from './components/mock-room/mock-room.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { RoomInfoListComponent } from './components/room-info-list/room-info-lis
     LoginComponent,
     LobbyComponent,
     RoomInfoComponent,
-    RoomInfoListComponent
+    RoomInfoListComponent,
+    MockRoomComponent
   ],
   imports: [
     BrowserModule,

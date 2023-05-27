@@ -46,4 +46,8 @@ export class LoginComponent implements OnInit {
   private validate(login : string) : boolean {
     return true
   }
+
+  joinMockRoom() {
+    this.router.navigateByUrl('/mockRoom') 
+  }
 }
