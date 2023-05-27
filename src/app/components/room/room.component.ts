@@ -4,6 +4,7 @@ import { Card } from 'src/app/model/Card';
 import { Gamestate } from 'src/app/model/Gamestate';
 import { Hand } from 'src/app/model/Hand';
 import { RoomInfo } from 'src/app/model/RoomInfo';
+import { action, playStructure, discardStructure, hintStructure } from 'src/app/model/action';
 import { ClientService } from 'src/app/service/client.service';
 
 @Component({
@@ -18,6 +19,8 @@ export class RoomComponent implements OnInit{
   gameState?: Gamestate;
   playerHand?: Hand;
   hands?: Map<string, Hand>;
+
+  lastActionMessage = "The game has not started yet"
 
   colors = ['red', 'green', 'white', 'blue', 'yellow']
   ranks = [1, 2, 3, 4, 5]
@@ -88,6 +91,8 @@ export class RoomComponent implements OnInit{
     let allHands = this.gameState.hands
     this.playerHand = allHands.get(this.playerName)
     this.hands = allHands
+
+    this.lastActionMessage = this.getActionMessage(this.gameState.history[this.gameState.history.length - 1])
   }
 
   getCards(player: string): Array<Card> {
@@ -147,5 +152,24 @@ export class RoomComponent implements OnInit{
 
   getLgClassName(colorName: string): string {
     return 'card-' + colorName + '-lg'
+  }
+
+  getActionMessage(arg: action): string {
+    console.log('Get action message')
+    if (arg.actionType === 'play') {
+      console.log('playStructure')
+      let playAction = <playStructure> arg
+      return playAction.player + ' played card ' + playAction.card?.rank + playAction.card?.color
+    } else if (arg.actionType === 'discard') {
+      console.log('discardStructure')
+      let discardAction = <discardStructure> arg
+      return discardAction.player + ' discarded card ' + discardAction .card?.rank + discardAction .card?.color
+    } else if (arg.actionType === 'hint') {
+      console.log('hintStructure')
+      let hintAction = <hintStructure> arg
+      return hintAction.player + ' gave ' + hintAction.receiver + ' a hint about ' + hintAction.type + hintAction.value
+    }
+    console.log('no matching class of action')
+    return ''
   }
 }

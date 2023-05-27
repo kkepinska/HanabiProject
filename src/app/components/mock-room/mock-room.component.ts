@@ -4,6 +4,7 @@ import { GameInfo } from 'src/app/model/GameInfo';
 import { Gamestate } from 'src/app/model/Gamestate';
 import { Hand } from 'src/app/model/Hand';
 import { RoomInfo } from 'src/app/model/RoomInfo';
+import { action, discardStructure, hintStructure, playStructure } from 'src/app/model/action';
 import { color } from 'src/app/model/colors';
 
 @Component({
@@ -34,6 +35,8 @@ export class MockRoomComponent implements OnInit{
   playerHand?: Hand;
   hands?: Map<string, Hand>;
 
+  lastActionMessage = "The game has not started yet"
+
   colors = ['red', 'green', 'white', 'blue', 'yellow']
   colorsEnum = [color.RED, color.GREEN, color.BLUE, color.YELLOW, color.WHITE]
   ranks = [1, 2, 3, 4, 5]
@@ -42,10 +45,13 @@ export class MockRoomComponent implements OnInit{
     this.playerName = 'Player 1'
     this.roomInfo = MockRoomComponent.ROOM_INFO
     this.roomId = 124
-  }
-
-  ngOnInit(): void {
     this.playerHand = this.getHands().get(this.playerName)
+    let playAction: playStructure = {
+      player: 'Player 2',
+      card: { rank: 3, color: color.BLUE, colorKnowledge: [], rankKnowledge: [] },
+      position: 2,
+      actionType: 'play'
+    } 
     this.gameState = {
         gameInfo: MockRoomComponent.GAME_INFO,
         hands: this.getHands(),
@@ -55,8 +61,15 @@ export class MockRoomComponent implements OnInit{
         currentScore: [0,2,4,0,10],
         lifeTokens: 10,
         currentPlayer: this.playerName,
-        history: []
+        history: [
+          playAction
+        ]
     }
+    this.lastActionMessage = this.getActionMessage(this.gameState.history[this.gameState.history.length - 1])
+
+  }
+
+  ngOnInit(): void {
   }
 
   getHands(): Map<string, Hand> {
@@ -137,5 +150,24 @@ export class MockRoomComponent implements OnInit{
 
   getColorName(colorNumber: number): string {
     return this.colors[colorNumber - 1]
+  }
+
+  getActionMessage(arg: action): string {
+    console.log('Get action message')
+    if (arg.actionType === 'play') {
+      console.log('playStructure')
+      let playAction = <playStructure> arg
+      return playAction.player + ' played card ' + playAction.card?.rank + playAction.card?.color
+    } else if (arg.actionType === 'discard') {
+      console.log('discardStructure')
+      let discardAction = <discardStructure> arg
+      return discardAction.player + ' discarded card ' + discardAction .card?.rank + discardAction .card?.color
+    } else if (arg.actionType === 'hint') {
+      console.log('hintStructure')
+      let hintAction = <hintStructure> arg
+      return hintAction.player + ' gave ' + hintAction.receiver + ' a hint about ' + hintAction.type + hintAction.value
+    }
+    console.log('no matching class of action')
+    return ''
   }
 }

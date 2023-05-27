@@ -58,44 +58,39 @@ $primary: $bg-green;
     @extend .btn;
     @extend .btn-lg;
     @extend .me-2;
-    &:disabled{
-        color: $card-red;
-        background-color: $card-red;
-    }
+    pointer-events: none;
+    color: $card-red;
+    background-color: $card-red;
 }
 .card-green-lg{
     @extend .btn;
     @extend .btn-lg;
     @extend .me-2;
-    &:disabled{
-        color: $card-green;
-        background-color: $card-green;
-    }
+    pointer-events: none;
+    color: $card-green;
+    background-color: $card-green;
 }
 .card-blue-lg{
     @extend .btn;
     @extend .btn-lg;
     @extend .me-2;
-    &:disabled{
-        color: $card-blue;
-        background-color: $card-blue;
-    }
+    pointer-events: none;
+    color: $card-blue;
+    background-color: $card-blue;
 }
 .card-yellow-lg{
     @extend .btn;
     @extend .btn-lg;
     @extend .me-2;
-    &:disabled{
-        color: $card-yellow;
-        background-color: $card-yellow;
-    }
+    pointer-events: none;
+    color: $card-yellow;
+    background-color: $card-yellow;
 }
 .card-white-lg{
     @extend .btn;
     @extend .btn-lg;
     @extend .me-2;
-    &:disabled{
-        color: $card-white;
-        background-color: $card-white;
-    }
+    pointer-events: none;
+    color: $card-white;
+    background-color: $card-white;
 }

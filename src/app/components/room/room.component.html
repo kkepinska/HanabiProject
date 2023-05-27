@@ -17,9 +17,14 @@
                 <p class="h4 text-secondary">Lives: {{gameState.lifeTokens}}</p>
             </div>
         </div>
+        <div class="row px-4">
+            <div class="h4">
+                {{ lastActionMessage }}
+            </div>
+        </div>
     </div>
 </ng-container>
-<div class="container-fluid px-5">
+<div class="container-fluid px-3">
     <ng-container *ngIf = "gameState !== undefined">
         <div class = "row gy-4 py-4">
             <ng-container *ngFor = "let player of roomInfo?.players">
@@ -79,7 +84,7 @@
                                 <div class="d-flex flex-row">
                                     <ng-container *ngFor = "let rank of card.rankKnowledge">
                                         <div class="d-flex flex-column">
-                                            <button class="btn btn-primary btn-lg me-1" disabled="true">
+                                            <button class="btn btn-primary btn-lg me-1" style="pointer-events: none">
                                                 {{ rank }}
                                             </button>
                                         </div>
