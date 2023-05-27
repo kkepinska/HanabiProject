@@ -21,6 +21,7 @@ export class RoomComponent implements OnInit{
   rank = 0
   color = 0
   colors = ['red', 'green', 'blue', 'yellow', 'orange']
+  ranks = [1, 2, 3, 4, 5]
 
   constructor(
     private readonly router: Router,
@@ -127,19 +128,19 @@ export class RoomComponent implements OnInit{
     });
   }
 
-  onSelectedRank(rank: string) {
-    this.rank = Number(rank)
-  }
-
-  onSelectedColor(color: string) {
-    this.color = this.colors.indexOf(color) + 1
-  }
-
   getColorNames(colorNumbers: Array<number>) : Array<string> {
     return colorNumbers.map(c => this.getColorName(c))
   }
 
   getColorName(colorNumber: number): string {
     return this.colors[colorNumber - 1]
+  }
+
+  getClassName(colorName: string): string {
+    return 'card-' + colorName
+  }
+
+  getLgClassName(colorName: string): string {
+    return 'card-' + colorName + '-lg'
   }
 }
