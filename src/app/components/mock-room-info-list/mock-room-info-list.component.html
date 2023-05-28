@@ -1,0 +1,9 @@
+<div class="overflow-auto" style="max-height: 60%;">
+    <div class="row">
+        <app-room-info *ngFor="let room of roomList" 
+            [room] = "room" [playerName] = "playerName"></app-room-info>
+    </div>
+</div>
+<div class="col p-4">
+    <app-button [text] = "createRoomText" (clicked)="createNewRoom()"></app-button>
+</div>

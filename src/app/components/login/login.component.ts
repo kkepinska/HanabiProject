@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() : void {
+    console.log('Login ' + this.login + 'has been submitted')
     if (this.validate(this.login)){
       this.clientService.login(this.login)
     } else {
@@ -49,5 +50,9 @@ export class LoginComponent implements OnInit {
 
   joinMockRoom() {
     this.router.navigateByUrl('/mockRoom') 
+  }
+
+  joinMockLobby() {
+    this.router.navigateByUrl('/mockLobby') 
   }
 }

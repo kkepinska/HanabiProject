@@ -1,9 +1,9 @@
-<body>
-  <main>
-    <div class="container-fluid py-3">
-      <h1>Hello, {{ userName }}!</h1>
-    <app-room-info-list [playerName]="userName"></app-room-info-list>
-    </div>
-  </main>
-</body>
-
+<div class="container-fluid gradient" style="overflow: auto;">
+    <h1 class="display-5 text-secondary m-4">
+        Hello, {{ userName }}!
+    </h1>
+    <p class="h2 m-4">
+        Available public rooms:
+    </p>
+    <app-mock-room-info-list [playerName]="userName"></app-mock-room-info-list>
+</div>

@@ -4,12 +4,14 @@ import { LobbyComponent } from './components/lobby/lobby.component';
 import { LoginComponent } from './components/login/login.component';
 import { RoomComponent } from './components/room/room.component';
 import { MockRoomComponent } from './components/mock-room/mock-room.component';
+import { MockLobbyComponent } from './components/mock-lobby/mock-lobby.component';
 
 const routes: Routes = [
   //{ path: "**", component: LoginComponent },
   { path: "login", component: LoginComponent },
   { path: "room/:roomId", component: RoomComponent },
   { path: "mockRoom", component: MockRoomComponent },
+  { path: "mockLobby", component: MockLobbyComponent },
   { path: "lobby", component: LobbyComponent },
   { path: '',   redirectTo: '/login', pathMatch: 'full' },
 ];

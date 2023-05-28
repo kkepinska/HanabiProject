@@ -13,6 +13,8 @@ import { LobbyComponent } from './components/lobby/lobby.component';
 import { RoomInfoComponent } from './components/room-info/room-info.component';
 import { RoomInfoListComponent } from './components/room-info-list/room-info-list.component';
 import { MockRoomComponent } from './components/mock-room/mock-room.component';
+import { MockLobbyComponent } from './components/mock-lobby/mock-lobby.component';
+import { MockRoomInfoListComponent } from './components/mock-room-info-list/mock-room-info-list.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { MockRoomComponent } from './components/mock-room/mock-room.component';
     LobbyComponent,
     RoomInfoComponent,
     RoomInfoListComponent,
-    MockRoomComponent
+    MockRoomComponent,
+    MockLobbyComponent,
+    MockRoomInfoListComponent
   ],
   imports: [
     BrowserModule,

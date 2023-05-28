@@ -1,11 +1,34 @@
-<body>
-    <main>
-        <form (submit)="onSubmit()">
-            <p>Enter your login:</p>
-            <input [(ngModel)]="login" type="text" id="login" name="login" 
-            required minlength="4" maxlength="20" size="20" placeholder="Enter your name">
-        </form>
-        <h1>{{errorMessage}}</h1>
-        <button (click)="joinMockRoom()">Test room GUI</button>
-    </main>
-</body>
+<div class="container-fluid gradient">
+    <div class="row">
+        <div class="col-4">
+        </div>
+        <div class="col-4 text-center">
+            <h1 class="display-1 text-secondary my-4">
+                Hanabi
+            </h1>
+            <p class="h3 my-2">
+                Enter your login:
+            </p>
+            <form (submit)="onSubmit()">
+                <input [(ngModel)]="login" class="form-control" type="text" id="login" name="login" 
+                required minlength="4" maxlength="20" size="20" placeholder="login">
+            </form>
+            <div class="h5 text-secondary">
+                {{errorMessage}}
+            </div>
+            <div>
+                <button class="btn btn-secondary btn-lg my-4" (click)="joinMockRoom()">
+                    Test room GUI
+                </button>
+            </div>
+            <div>
+                <button class="btn btn-secondary btn-lg my" (click)="joinMockLobby()">
+                    Test lobby GUI
+                </button>
+            </div>
+        </div>
+        <div class="col-4">
+            
+        </div>
+    </div>
+</div>

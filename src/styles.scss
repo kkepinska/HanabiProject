@@ -94,3 +94,16 @@ $primary: $bg-green;
     color: $card-white;
     background-color: $card-white;
 }
+
+.gradient {
+    height: 100vh;
+    background: linear-gradient(47deg, rgba(35,226,155,1) 0%, rgba(55,214,132,1) 51%, rgba(28,224,220,1) 100%);
+}
+
+.display{
+    position:absolute;
+    left:50%;
+    top:30%;
+    transform:translate(-50%, -50%);
+    opacity: 1;
+ }
