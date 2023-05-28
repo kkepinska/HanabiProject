@@ -17,7 +17,7 @@ export class AppComponent {
   }
 
   joinRoom() : void{
-    const socket = io('http://localhost:8080');
+    const socket = io('http://18.185.170.171:8080');
     socket.emit("join", "hello :)", (response:Response) => {
       console.log(response); // "got it"
     });
