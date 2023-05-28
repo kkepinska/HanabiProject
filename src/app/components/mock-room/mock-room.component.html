@@ -1,23 +1,42 @@
-<button *ngIf = "gameState == undefined">Start game</button>
+<button class="btn btn-primary btn-lg" *ngIf = "gameState == undefined">
+    Start game
+</button>
 <ng-container *ngIf = "gameState !== undefined">
-    <div class="site-header sticky-top bg-primary px-2 py-3">
+    <div class="site-header sticky-top bg-primary py-2">
         <div class="row">
-            <div class="col-xl-6 col-lg-5 col">
-                <p class="h3 text-secondary">&nbsp;&nbsp;&nbsp;&nbsp;Current player: {{ gameState.currentPlayer}}</p>
+            <div class="col-xl-4 col-lg-4 col-md-3 col">
+                <div class="d-none d-md-block">
+                    <p class="h3 text-secondary ms-4 mt-2">
+                        Current player: {{ gameState.currentPlayer}}
+                    </p>
+                </div>
+                <p class="h4 ms-4">
+                    {{ lastActionMessage }}
+                </p>
             </div>
-            <div class="col-xl-2 col-lg-2 col">
-                <p class="h4 text-secondary">Available hints: {{ gameState.availableHints }}</p>
+            <div class="col-xl-3 col-lg-3 col-md-3 col">
+                <p class="h4 text-secondary mt-2 ms-4">
+                    Available hints: {{ gameState.availableHints }}
+                </p>
+                <p class="h4 text-secondary ms-4">
+                    Lives: {{gameState.lifeTokens}}
+                </p>
             </div>
-            <div class="col-xl-2 col-lg-3 col">
-                <p class="h4 text-secondary">Score: {{ gameState.currentScore }}</p>
-            </div>
-            <div class="col-xl-2 col-lg-1 col">
-                <p class="h4 text-secondary">Lives: {{gameState.lifeTokens}}</p>
-            </div>
-        </div>
-        <div class="row px-4">
-            <div class="h4">
-                {{ lastActionMessage }}
+            <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12 col-xs-12">
+                <div class="row flex-nowrap gx-2 mt-2 mx-4">
+                    <ng-container *ngFor = "let colorScore of gameState.currentScore; let i = index">
+                        <ng-container *ngIf = "colorScore === 0">
+                            <div class="col">
+                                <img class="img-responsive" src="assets/images/placeholder.png">
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf = "colorScore !== 0">
+                            <div class="col">
+                                <img class="img-responsive" src="assets/images/{{i + 1}}{{colorScore}}.png">
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                </div>
             </div>
         </div>
     </div>
@@ -113,4 +132,3 @@
         </div> 
     </ng-container>
 </div>
-

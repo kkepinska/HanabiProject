@@ -58,7 +58,13 @@ export class MockRoomComponent implements OnInit{
         deck: this.getCards(""),
         discard: this.getCards(""),
         availableHints: 8,
-        currentScore: [0,2,4,0,10],
+        currentScore: [
+          Math.floor(Math.random()*6),
+          Math.floor(Math.random()*6),
+          Math.floor(Math.random()*6),
+          Math.floor(Math.random()*6),
+          Math.floor(Math.random()*6)
+          ],
         lifeTokens: 10,
         currentPlayer: this.playerName,
         history: [
