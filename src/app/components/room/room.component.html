@@ -1,6 +1,18 @@
-<button class="btn btn-primary btn-lg" *ngIf = "gameState == undefined" (click)="startGame()">
-    Start game
-</button>
+<ng-container *ngIf = "gameState == undefined">
+    <div class="container-fluid gradient">
+        <div class="row">
+            <div class="col-4">
+            </div>
+            <div class="col-4 text-center p-4">
+                <button class="btn btn-secondary btn-lg" (click)="startGame()">
+                    Start game
+                </button>
+            </div>
+            <div class="col-4">
+            </div>
+        </div>
+    </div>
+</ng-container>
 <ng-container *ngIf = "gameState !== undefined">
     <div class="site-header sticky-top bg-primary py-2">
         <div class="row">

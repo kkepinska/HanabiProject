@@ -159,15 +159,18 @@ export class RoomComponent implements OnInit{
     if (arg.actionType === 'play') {
       console.log('playStructure')
       let playAction = <playStructure> arg
-      return playAction.player + ' played card ' + playAction.card?.rank + playAction.card?.color
+      let colorName = this.getColorName(<number>playAction.card?.color)
+      return playAction.player + ' played card ' + colorName + ' ' + playAction.card?.rank
     } else if (arg.actionType === 'discard') {
       console.log('discardStructure')
       let discardAction = <discardStructure> arg
-      return discardAction.player + ' discarded card ' + discardAction .card?.rank + discardAction .card?.color
+      let colorName = this.getColorName(<number>discardAction.card?.color)
+      return discardAction.player + ' discarded card ' + colorName + ' ' + discardAction.card?.rank
     } else if (arg.actionType === 'hint') {
       console.log('hintStructure')
       let hintAction = <hintStructure> arg
-      return hintAction.player + ' gave ' + hintAction.receiver + ' a hint about ' + hintAction.type + hintAction.value
+      let hintValue = (hintAction.type === 'rank')? hintAction.value : this.getColorName(<number>hintAction.value)
+      return hintAction.player + ' gave ' + hintAction.receiver + ' a hint about ' + hintAction.type + ' ' + hintValue
     }
     console.log('no matching class of action')
     return ''
