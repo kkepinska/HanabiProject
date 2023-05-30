@@ -84,7 +84,7 @@
                                         <button class="btn btn-primary dropdown-toggle me-2"  data-bs-toggle="dropdown">hint color</button>
                                         <div class="dropdown-menu">
                                             <div class="btn-group btn-group-lg">
-                                                <ng-container *ngFor = "let colorName of colors; let i = index">
+                                                <ng-container *ngFor = "let colorName of getColorNames(); let i = index">
                                                     <button [className]="getClassName(colorName)" (click)="hintCard(player, 'color', i + 1)">
                                                         &#10003;
                                                     </button>

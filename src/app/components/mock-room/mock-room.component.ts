@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Card } from 'src/app/model/Card';
 import { GameInfo } from 'src/app/model/GameInfo';
 import { Gamestate } from 'src/app/model/Gamestate';
@@ -6,13 +6,14 @@ import { Hand } from 'src/app/model/Hand';
 import { RoomInfo } from 'src/app/model/RoomInfo';
 import { action, discardStructure, hintStructure, playStructure } from 'src/app/model/action';
 import { color } from 'src/app/model/colors';
+import { FormatterService } from 'src/app/service/formatter.service';
 
 @Component({
   selector: 'app-mock-room',
   templateUrl: './mock-room.component.html',
   styleUrls: ['./mock-room.component.scss']
 })
-export class MockRoomComponent implements OnInit{
+export class MockRoomComponent {
   private static ROOM_INFO : RoomInfo = {
     id : 124,
     playerCount : 3,
@@ -37,11 +38,12 @@ export class MockRoomComponent implements OnInit{
 
   lastActionMessage = "The game has not started yet"
 
-  colors = ['red', 'green', 'white', 'blue', 'yellow']
   colorsEnum = [color.RED, color.GREEN, color.BLUE, color.YELLOW, color.WHITE]
   ranks = [1, 2, 3, 4, 5]
 
-  constructor() {
+  public constructor(
+    private readonly formatterService: FormatterService
+    ) {
     this.playerName = 'Player 1'
     this.roomInfo = MockRoomComponent.ROOM_INFO
     this.roomId = 124
@@ -71,14 +73,11 @@ export class MockRoomComponent implements OnInit{
           playAction
         ]
     }
-    this.lastActionMessage = this.getActionMessage(this.gameState.history[this.gameState.history.length - 1])
-
+    const lastAction = this.gameState.history[this.gameState.history.length - 1]
+    this.lastActionMessage = this.getActionMessage(lastAction)
   }
 
-  ngOnInit(): void {
-  }
-
-  getHands(): Map<string, Hand> {
+  private getHands(): Map<string, Hand> {
     let hands = new Map<string, Hand>()
     hands.set('Player 1', { cards : this.getCards("") })
     hands.set('Player 2', { cards : this.getCards("") })
@@ -121,19 +120,11 @@ export class MockRoomComponent implements OnInit{
     ]
   }
 
-  getRandom(): number {
+  private getRandom(): number {
     return Math.floor(Math.random()*5+1)
   }
 
-  getClassName(colorName: string): string {
-    return 'card-' + colorName
-  }
-
-  getLgClassName(colorName: string): string {
-    return 'card-' + colorName + '-lg'
-  }
-
-  playCard(card: Card) {
+  public playCard(card: Card): void {
     let cardIdx = this.playerHand?.cards.indexOf(card)
     let arg: playStructure = {
         player: this.playerName,
@@ -145,7 +136,7 @@ export class MockRoomComponent implements OnInit{
     console.log(this.getActionMessage(arg))
   }
 
-  discardCard(card: Card) {
+  public discardCard(card: Card): void {
     if (this.playerHand === undefined) {
       return;
     }
@@ -160,7 +151,7 @@ export class MockRoomComponent implements OnInit{
     console.log(this.getActionMessage(arg))
   }
 
-  hintCard(receiver: string, hintType: ("rank" | "color"), hintValue: number) {
+  public hintCard(receiver: string, hintType: ("rank" | "color"), hintValue: number): void {
     let arg: hintStructure = {
         player: this.playerName,
         receiver: receiver,
@@ -172,33 +163,23 @@ export class MockRoomComponent implements OnInit{
     console.log(this.getActionMessage(arg))
   }
 
-  getColorNames(colorNumbers: Array<number>) : Array<string> {
-    return colorNumbers.map(c => this.getColorName(c))
+  public getActionMessage(arg: action): string {
+    return this.formatterService.getActionMessage(arg)
   }
 
-  getColorName(colorNumber: number): string {
-    return this.colors[colorNumber - 1]
+  public getColorNames(): Array<string> {
+    return this.formatterService.getColorNames()
   }
 
-  getActionMessage(arg: action): string {
-    console.log('Get action message')
-    if (arg.actionType === 'play') {
-      console.log('playStructure')
-      let playAction = <playStructure> arg
-      let colorName = this.getColorName(<number>playAction.card?.color)
-      return playAction.player + ' played card ' + colorName + ' ' + playAction.card?.rank
-    } else if (arg.actionType === 'discard') {
-      console.log('discardStructure')
-      let discardAction = <discardStructure> arg
-      let colorName = this.getColorName(<number>discardAction.card?.color)
-      return discardAction.player + ' discarded card ' + colorName + ' ' + discardAction.card?.rank
-    } else if (arg.actionType === 'hint') {
-      console.log('hintStructure')
-      let hintAction = <hintStructure> arg
-      let hintValue = (hintAction.type === 'rank')? hintAction.value : this.getColorName(<number>hintAction.value)
-      return hintAction.player + ' gave ' + hintAction.receiver + ' a hint about ' + hintAction.type + ' ' + hintValue
-    }
-    console.log('no matching class of action')
-    return ''
+  public getColorName(colorNumber: number): string {
+    return this.formatterService.getColorName(colorNumber)
+  }
+
+  public getClassName(colorName: string): string {
+    return this.formatterService.getClassName(colorName)
+  }
+
+  public getLgClassName(colorName: string): string {
+    return this.formatterService.getLgClassName(colorName)
   }
 }

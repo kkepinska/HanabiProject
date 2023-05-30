@@ -4,8 +4,9 @@ import { Card } from 'src/app/model/Card';
 import { Gamestate } from 'src/app/model/Gamestate';
 import { Hand } from 'src/app/model/Hand';
 import { RoomInfo } from 'src/app/model/RoomInfo';
-import { action, playStructure, discardStructure, hintStructure } from 'src/app/model/action';
+import { action } from 'src/app/model/action';
 import { ClientService } from 'src/app/service/client.service';
+import { FormatterService } from 'src/app/service/formatter.service';
 
 @Component({
   selector: 'app-room',
@@ -22,12 +23,12 @@ export class RoomComponent implements OnInit{
 
   lastActionMessage = "The game has not started yet"
 
-  colors = ['red', 'green', 'white', 'blue', 'yellow']
   ranks = [1, 2, 3, 4, 5]
 
-  constructor(
+  public constructor(
     private readonly router: Router,
     private readonly clientService: ClientService,
+    private readonly formatterService: FormatterService
   ) {
     var state: any = this.router.getCurrentNavigation()?.extras.state
     this.playerName = state["playerName"]
@@ -35,7 +36,7 @@ export class RoomComponent implements OnInit{
     this.roomId = this.roomInfo?.id !== undefined? this.roomInfo.id : 0
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     if (this.playerName !== undefined) {
       this.clientService.joinRoom(this.roomId, this.playerName)
     }
@@ -44,17 +45,13 @@ export class RoomComponent implements OnInit{
     this.receiveUpdate();
   }
 
-  receiveGetPlayers() {
+  private receiveGetPlayers(): void {
     this.clientService.receiveUpdateRoom().subscribe((roomInfo: RoomInfo) => {
       this.roomInfo = roomInfo;
     })
   }
 
-  startGame() {
-    this.clientService.startGame(this.roomId);
-  }
-
-  recieveStartGame() {
+  private recieveStartGame(): void {
     this.clientService.recieveStartGame().subscribe((msg: [Gamestate, Array<[string, Hand]>]) => {
       console.log("Room ", this.roomId, " received gameState in startGame")
       let gameState = msg[0]
@@ -63,7 +60,7 @@ export class RoomComponent implements OnInit{
     });
   }
 
-  private setGameState(gameState: Gamestate, handsArray: Array<[string, Hand]>) {
+  private setGameState(gameState: Gamestate, handsArray: Array<[string, Hand]>): void {
     console.log(gameState)
     console.log("handsArray:")
     console.log(handsArray)
@@ -92,10 +89,24 @@ export class RoomComponent implements OnInit{
     this.playerHand = allHands.get(this.playerName)
     this.hands = allHands
 
-    this.lastActionMessage = this.getActionMessage(this.gameState.history[this.gameState.history.length - 1])
+    const lastAction = this.gameState.history[this.gameState.history.length - 1]
+    this.lastActionMessage = this.getActionMessage(lastAction)
   }
 
-  getCards(player: string): Array<Card> {
+  private receiveUpdate(): void {
+    this.clientService.recieveUpdate().subscribe((msg: [Gamestate, Array<[string, Hand]>]) => {
+      console.log("Room ", this.roomId, " received gameState in startGame")
+      let gameState = msg[0]
+      let handsArray = msg[1]
+      this.setGameState(gameState, handsArray)
+    });
+  }
+
+  public startGame(): void {
+    this.clientService.startGame(this.roomId);
+  }
+
+  public getCards(player: string): Array<Card> {
     if (this.gameState === undefined || this.gameState?.hands === undefined) {
       return []
     }
@@ -106,7 +117,7 @@ export class RoomComponent implements OnInit{
     return hand.cards
   }
 
-  playCard(card: Card) {
+  public playCard(card: Card): void {
     if (this.playerHand === undefined) {
       return;
     }
@@ -115,7 +126,7 @@ export class RoomComponent implements OnInit{
     this.clientService.playCard(this.playerName, cardIdx, this.roomId);
   }
 
-  discardCard(card: Card) {
+  public discardCard(card: Card): void {
     if (this.playerHand === undefined) {
       return;
     }
@@ -124,55 +135,28 @@ export class RoomComponent implements OnInit{
     this.clientService.discardCard(this.playerName, cardIdx, this.roomId);
   }
 
-  hintCard(receiver: string, hintType: ("rank" | "color"), hintValue: number) {
+  public hintCard(receiver: string, hintType: ("rank" | "color"), hintValue: number): void {
     console.log('hintCard', this.playerName, receiver, hintType, hintValue, this.roomId)
     this.clientService.hintCard(this.playerName, receiver, hintType, hintValue, this.roomId);
   }
 
-  receiveUpdate() {
-    this.clientService.recieveUpdate().subscribe((msg: [Gamestate, Array<[string, Hand]>]) => {
-      console.log("Room ", this.roomId, " received gameState in startGame")
-      let gameState = msg[0]
-      let handsArray = msg[1]
-      this.setGameState(gameState, handsArray)
-    });
+  public getActionMessage(arg: action): string {
+    return this.formatterService.getActionMessage(arg)
   }
 
-  getColorNames(colorNumbers: Array<number>) : Array<string> {
-    return colorNumbers.map(c => this.getColorName(c))
+  public getColorNames(): Array<string> {
+    return this.formatterService.getColorNames()
   }
 
-  getColorName(colorNumber: number): string {
-    return this.colors[colorNumber - 1]
+  public getColorName(colorNumber: number): string {
+    return this.formatterService.getColorName(colorNumber)
   }
 
-  getClassName(colorName: string): string {
-    return 'card-' + colorName
+  public getClassName(colorName: string): string {
+    return this.formatterService.getClassName(colorName)
   }
 
-  getLgClassName(colorName: string): string {
-    return 'card-' + colorName + '-lg'
-  }
-
-  getActionMessage(arg: action): string {
-    console.log('Get action message')
-    if (arg.actionType === 'play') {
-      console.log('playStructure')
-      let playAction = <playStructure> arg
-      let colorName = this.getColorName(<number>playAction.card?.color)
-      return playAction.player + ' played card ' + colorName + ' ' + playAction.card?.rank
-    } else if (arg.actionType === 'discard') {
-      console.log('discardStructure')
-      let discardAction = <discardStructure> arg
-      let colorName = this.getColorName(<number>discardAction.card?.color)
-      return discardAction.player + ' discarded card ' + colorName + ' ' + discardAction.card?.rank
-    } else if (arg.actionType === 'hint') {
-      console.log('hintStructure')
-      let hintAction = <hintStructure> arg
-      let hintValue = (hintAction.type === 'rank')? hintAction.value : this.getColorName(<number>hintAction.value)
-      return hintAction.player + ' gave ' + hintAction.receiver + ' a hint about ' + hintAction.type + ' ' + hintValue
-    }
-    console.log('no matching class of action')
-    return ''
+  public getLgClassName(colorName: string): string {
+    return this.formatterService.getLgClassName(colorName)
   }
 }
