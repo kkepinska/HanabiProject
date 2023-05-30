@@ -121,4 +121,12 @@ export class ClientService {
       });
     });
   }
+
+  public deleteRoom(): Observable<number> {
+    return new Observable<number>((observer) => {
+        this.socket.on('deleteRoom', (roomId: number) => {
+            observer.next(roomId)
+        })
+    })
+  }
 }

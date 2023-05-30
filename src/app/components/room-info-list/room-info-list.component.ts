@@ -9,29 +9,48 @@ import { ClientService } from 'src/app/service/client.service';
   styleUrls: ['./room-info-list.component.scss']
 })
 export class RoomInfoListComponent implements OnInit {
-  readonly createRoomText = "create new room";
+  public readonly createRoomText = "create new room";
 
-  @Input() playerName?: string;
-  roomList: RoomInfo[] = []
+  @Input() public playerName?: string;
+  public roomList: Array<RoomInfo> = []
 
-  constructor(
+  public constructor(
     private readonly clientService: ClientService
   ) {}
 
-  ngOnInit(){
+  public ngOnInit() {
+    this.fetchAllRooms()
+    this.receiveGetNewRoom()
+    this.receiveGetJoinRoom()
+    this.receiveDeleteRoom()
+  }
+
+  private fetchAllRooms() {
     this.clientService.fetchAllRooms();
     this.clientService.onFetchAllRoomsResponse().pipe(first())
       .subscribe((roomInfoList: RoomInfo[]) => this.roomList.push(...roomInfoList))
+  }
+
+  private receiveGetNewRoom(): void {
     this.clientService.getNewRoom().subscribe((roomInfo: RoomInfo) => {
-      this.roomList.push(roomInfo);
-    })
-    this.clientService.getJoinRoom().subscribe((updatedRoom: RoomInfo) => {
-      this.roomList = this.roomList
-        .map(room => room.id !== updatedRoom.id? room : updatedRoom);
+        this.roomList.push(roomInfo);
     })
   }
 
-  createNewRoom() {
+  private receiveGetJoinRoom(): void{
+    this.clientService.getJoinRoom().subscribe((updatedRoom: RoomInfo) => {
+        this.roomList = this.roomList
+          .map(room => room.id !== updatedRoom.id? room : updatedRoom);
+    })
+  }
+
+  private receiveDeleteRoom(): void {
+    this.clientService.deleteRoom().subscribe((deletedRoomId: number) => {
+        this.roomList = this.roomList.filter((room) => room.id != deletedRoomId)
+    })
+  }
+
+  public createNewRoom() {
     this.clientService.createRoom(true)
   }
 }
