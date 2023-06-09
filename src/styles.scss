@@ -10,8 +10,29 @@ $card-white: rgb(255, 255, 255);
 
 $primary: $bg-green;
 
+$grid-breakpoints: (
+  xs: 0,
+  sm: 600px,
+  md-lg: 900px,
+  md: 800px,
+  lg: 1000px,
+  xl: 1200px
+);
+
+$container-max-widths: (
+  sm: 600px,
+  md-lg: 900px,
+  md: 800px,
+  lg: 1000px,
+  xl: 1220px
+);
+
 @import '../node_modules/bootstrap/scss/bootstrap';
 @import "~bootstrap/dist/css/bootstrap.css";
+
+:root {
+    --breakpoint-md-sm: 740px;
+}
 
 .card-red{
     @extend .btn;
@@ -56,7 +77,7 @@ $primary: $bg-green;
 
 .card-red-lg{
     @extend .btn;
-    @extend .btn-lg;
+     
     @extend .me-2;
     pointer-events: none;
     color: $card-red;
@@ -64,7 +85,7 @@ $primary: $bg-green;
 }
 .card-green-lg{
     @extend .btn;
-    @extend .btn-lg;
+     
     @extend .me-2;
     pointer-events: none;
     color: $card-green;
@@ -72,7 +93,7 @@ $primary: $bg-green;
 }
 .card-blue-lg{
     @extend .btn;
-    @extend .btn-lg;
+     
     @extend .me-2;
     pointer-events: none;
     color: $card-blue;
@@ -80,7 +101,7 @@ $primary: $bg-green;
 }
 .card-yellow-lg{
     @extend .btn;
-    @extend .btn-lg;
+     
     @extend .me-2;
     pointer-events: none;
     color: $card-yellow;
@@ -88,7 +109,7 @@ $primary: $bg-green;
 }
 .card-white-lg{
     @extend .btn;
-    @extend .btn-lg;
+     
     @extend .me-2;
     pointer-events: none;
     color: $card-white;

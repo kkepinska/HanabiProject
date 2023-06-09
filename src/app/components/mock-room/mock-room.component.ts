@@ -86,12 +86,13 @@ export class MockRoomComponent {
   }
 
   getCards(player: string): Array<Card> {
+    console.log("getCards", player)
     return [
       {
         color: this.colorsEnum[this.getRandom() - 1],
         rank: this.getRandom(),
         colorKnowledge: [color.RED, color.GREEN, color.BLUE, color.YELLOW],
-        rankKnowledge: [3,4,5],
+        rankKnowledge: [this.getRandom(),this.getRandom(),this.getRandom()],
       },
       {
         color: this.colorsEnum[this.getRandom() - 1],
@@ -103,7 +104,7 @@ export class MockRoomComponent {
         color: this.colorsEnum[this.getRandom() - 1],
         rank: this.getRandom(),
         colorKnowledge: [color.RED, color.GREEN, color.BLUE, color.YELLOW, color.WHITE],
-        rankKnowledge: [2,4,5],
+        rankKnowledge: [1,2,3,4,5],
       },
       {
         color: this.colorsEnum[this.getRandom() - 1],

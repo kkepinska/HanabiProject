@@ -22,11 +22,11 @@
                         Current player: {{ gameState.currentPlayer}}
                     </p>
                 </div>
-                <p class="h4 ms-4">
+                <p class="h5 ms-4">
                     {{ lastActionMessage }}
                 </p>
             </div>
-            <div class="col-xl-3 col-lg-3 col-md-3 col">
+            <div class="col-xl-4 col-lg-3 col-md-3 col">
                 <p class="h4 text-secondary mt-2 ms-4">
                     Available hints: {{ gameState.availableHints }}
                 </p>
@@ -38,12 +38,12 @@
                 <div class="row flex-nowrap gx-2 mt-2 mx-4">
                     <ng-container *ngFor = "let colorScore of gameState.currentScore; let i = index">
                         <ng-container *ngIf = "colorScore === 0">
-                            <div class="col">
+                            <div class="col-xl col-2">
                                 <img class="img-responsive" src="assets/images/placeholder.png">
                             </div>
                         </ng-container>
                         <ng-container *ngIf = "colorScore !== 0">
-                            <div class="col">
+                            <div class="col-xl col-2">
                                 <img class="img-responsive" src="assets/images/{{i + 1}}{{colorScore}}.png">
                             </div>
                         </ng-container>
@@ -94,6 +94,55 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary my-1" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            Show card knowledge
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" style="overflow: hidden;" id="staticBackdrop" data-bs-keyboard="false" tabindex="-1"  style="overflow-y: scroll; ">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body row" style="height: 75vh; overflow-x: scroll; background-color: #e8f597 !important;">
+                                        <ng-container *ngFor = "let card of getCards(player)">
+                                            <div class="col-xl-4 col-12">
+                                                <div class="row flex-nowrap p-2">
+                                                    <div class="col-xl-4 col-3">
+                                                        <img class="img-responsive" src="assets/images/{{card.color}}{{card.rank}}.png">
+                                                    </div>
+                                                    <div class="col-xl-8 col-9">
+                                                        <p class="h5">Color knowledge:</p>
+                                                        <div class="d-flex flex-row">
+                                                            <ng-container *ngFor = "let color of card.colorKnowledge">
+                                                                <div class="d-flex flex-column">
+                                                                    <button [className]="getLgClassName(getColorName(color))" class=>
+                                                                        O
+                                                                    </button>
+                                                                </div>
+                                                            </ng-container>
+                                                        </div>
+                                                        <p class="h5">Rank knowledge:</p>
+                                                        <div class="d-flex flex-row">
+                                                            <ng-container *ngFor = "let rank of card.rankKnowledge">
+                                                                <div class="d-flex flex-column">
+                                                                    <button class="btn btn-primary me-1" style="pointer-events: none">
+                                                                        {{ rank }}
+                                                                    </button>
+                                                                </div>
+                                                            </ng-container>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                    <div class="modal-footer">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         </ng-container>
                     </div>
                 </ng-container>
@@ -103,23 +152,23 @@
         <p class="h2 text-secondary">Your cards</p>
         <div class="row g-4">
             <ng-container *ngFor = "let card of getCards(playerName); let i = index">
-                <div class="col-12 col-xl-6">
+                <div class="col-xl-3 col-md-4 col-sm-6 col-12">
                     <div class="rounded border border-secondary p-3">
                         <p class="h3">Card {{ i + 1 }}</p>
                         <div class="row g-2">
-                            <div class="col-xl-6 col-lg-4 col-sm-6 p-1">
+                            <div class="col-12 p-1">
                                 <p class="h5">Possible ranks:</p>
                                 <div class="d-flex flex-row">
                                     <ng-container *ngFor = "let rank of card.rankKnowledge">
                                         <div class="d-flex flex-column">
-                                            <button class="btn btn-primary btn-lg me-1" style="pointer-events: none">
+                                            <button class="btn btn-primary me-1" style="pointer-events: none">
                                                 {{ rank }}
                                             </button>
                                         </div>
                                     </ng-container>
                                 </div>
                             </div>
-                            <div class="col-xl-6 col-lg-4 col-sm-6">
+                            <div class="col-12 p-1">
                                 <p class="h5">Possible colors:</p>
                                 <div class="d-flex flex-row">
                                     <ng-container *ngFor = "let color of card.colorKnowledge">
@@ -133,8 +182,8 @@
                             </div>
                             <div class="col-xl-12 col-lg-4 col-sm-12 d-flex align-items-center">
                                 <ng-container *ngIf = "gameState?.currentPlayer === playerName">
-                                    <button class="btn btn-primary btn-lg me-3" (click)="playCard(card)">play</button>
-                                    <button class="btn btn-primary btn-lg me-3" (click)="discardCard(card)">discard</button>
+                                    <button class="btn btn-primary me-3" (click)="playCard(card)">play</button>
+                                    <button class="btn btn-primary me-3" (click)="discardCard(card)">discard</button>
                                 </ng-container>
                             </div>
                         </div>

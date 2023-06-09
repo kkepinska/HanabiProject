@@ -9,7 +9,7 @@ import { Hand } from '../model/Hand';
   providedIn: 'root'
 })
 export class ClientService {
-  private static SOCKET_PATH = 'http://18.185.170.171:8080';
+  private static SOCKET_PATH = 'http://127.0.0.1:8080';
 
   private readonly socket = io(ClientService.SOCKET_PATH);
   public readonly rooms$: Subject<RoomInfo> = new Subject<RoomInfo>();
@@ -61,7 +61,8 @@ export class ClientService {
   };
 
   public getJoinRoom() {
-    this.socket.on('jonRoom', (updatedRoom: RoomInfo) =>{
+    this.socket.on('joinRoom', (updatedRoom: RoomInfo) =>{
+        console.log('joinRoom received in service')
       this.rooms$.asObservable().pipe(
         map(room => room.id !== updatedRoom.id? room : updatedRoom)
       )
