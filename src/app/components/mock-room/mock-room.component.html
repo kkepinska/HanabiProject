@@ -19,7 +19,7 @@
             <div class="col-xl-4 col-lg-4 col-md-3 col">
                 <div class="d-none d-md-block">
                     <p class="h3 text-secondary ms-4 mt-2">
-                        Current player: {{ gameState.currentPlayer}}
+                        Current player: {{ gameState.currentPlayer }}
                     </p>
                 </div>
                 <p class="h5 ms-4">
@@ -95,11 +95,11 @@
                                 </div>
                             </div>
                             <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary my-1" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <button type="button" class="btn btn-primary my-1" data-bs-toggle="modal" [attr.data-bs-target]="'#'+player">
                             Show card knowledge
                         </button>
                         <!-- Modal -->
-                        <div class="modal fade" style="overflow: hidden;" id="staticBackdrop" data-bs-keyboard="false" tabindex="-1"  style="overflow-y: scroll; ">
+                        <div class="modal fade" style="overflow: hidden;" id={{player}} data-bs-keyboard="false" style="overflow-y: scroll;">
                             <div class="modal-dialog modal-xl">
                                 <div class="modal-content">
                                     <div class="modal-header">

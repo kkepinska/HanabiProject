@@ -14,10 +14,18 @@ import { FormatterService } from 'src/app/service/formatter.service';
   styleUrls: ['./mock-room.component.scss']
 })
 export class MockRoomComponent {
+  private static readonly PLAYER1 = 'Player1'
+  private static readonly PLAYER2 = 'Player2'
+  private static readonly PLAYER3 = 'Player3'
+
   private static ROOM_INFO : RoomInfo = {
     id : 124,
     playerCount : 3,
-    players: ['Player 1', 'Player 2', 'Player 3'],
+    players: [
+        MockRoomComponent.PLAYER1, 
+        MockRoomComponent.PLAYER2, 
+        MockRoomComponent.PLAYER3
+    ],
     isPublic : true,
   }
   private static GAME_INFO : GameInfo = {
@@ -44,12 +52,12 @@ export class MockRoomComponent {
   public constructor(
     private readonly formatterService: FormatterService
     ) {
-    this.playerName = 'Player 1'
+    this.playerName = MockRoomComponent.PLAYER1
     this.roomInfo = MockRoomComponent.ROOM_INFO
     this.roomId = 124
     this.playerHand = this.getHands().get(this.playerName)
     let playAction: playStructure = {
-      player: 'Player 2',
+      player: MockRoomComponent.PLAYER2,
       card: { rank: 3, color: color.BLUE, colorKnowledge: [], rankKnowledge: [] },
       position: 2,
       actionType: 'play'
@@ -79,9 +87,9 @@ export class MockRoomComponent {
 
   private getHands(): Map<string, Hand> {
     let hands = new Map<string, Hand>()
-    hands.set('Player 1', { cards : this.getCards("") })
-    hands.set('Player 2', { cards : this.getCards("") })
-    hands.set('Player 3', { cards : this.getCards("") })
+    hands.set(MockRoomComponent.PLAYER1, { cards : this.getCards("") })
+    hands.set(MockRoomComponent.PLAYER2, { cards : this.getCards("") })
+    hands.set(MockRoomComponent.PLAYER3, { cards : this.getCards("") })
     return hands
   }
 
