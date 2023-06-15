@@ -13,7 +13,7 @@
         </div>
     </div>
 </ng-container>
-<ng-container *ngIf = "gameState !== undefined">
+<ng-container *ngIf = "gameState !== undefined && gameState.end_of_game == false">
     <div class="site-header sticky-top bg-primary py-2">
         <div class="row">
             <div class="col-xl-4 col-lg-4 col-md-3 col">
@@ -54,7 +54,7 @@
     </div>
 </ng-container>
 <div class="container-fluid px-3">
-    <ng-container *ngIf = "gameState !== undefined">
+    <ng-container *ngIf = "gameState !== undefined && gameState.end_of_game == false">
         <div class = "row gy-4 py-4">
             <ng-container *ngFor = "let player of roomInfo?.players">
                 <ng-container *ngIf = "player !== playerName">
@@ -193,3 +193,16 @@
         </div> 
     </ng-container>
 </div>
+
+<ng-container *ngIf = "gameState !== undefined && gameState.end_of_game == true">
+    <div class="container-fluid gradient">
+        <div class="row">
+            <div class="col-4">
+            </div>
+                Game over. <br>
+                Your score is {{ gameState.score }}
+            <div class="col-4">
+            </div>
+        </div>
+    </div>
+</ng-container>

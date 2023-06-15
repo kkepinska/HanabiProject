@@ -21,6 +21,7 @@ export class RoomComponent implements OnInit{
   playerHand?: Hand;
   hands?: Map<string, Hand>;
 
+
   lastActionMessage = "The game has not started yet"
 
   ranks = [1, 2, 3, 4, 5]
@@ -80,7 +81,9 @@ export class RoomComponent implements OnInit{
       currentScore: gameState.currentScore,
       lifeTokens: gameState.lifeTokens,
       currentPlayer: gameState.currentPlayer,
-      history: gameState.history
+      history: gameState.history,
+      end_of_game: gameState.end_of_game,
+      score: gameState.score,
     }
     console.log(this.gameState.hands)
     console.log("History: \n", this.gameState.history)

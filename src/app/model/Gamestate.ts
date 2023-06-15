@@ -13,4 +13,6 @@ export interface Gamestate {
     lifeTokens: number;
     currentPlayer: string;
     history: Array<action>;
+    end_of_game: boolean;
+    score: number;
 }

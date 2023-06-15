@@ -79,7 +79,9 @@ export class MockRoomComponent {
         currentPlayer: this.playerName,
         history: [
           playAction
-        ]
+        ],
+        end_of_game: false,
+        score: 0,
     }
     const lastAction = this.gameState.history[this.gameState.history.length - 1]
     this.lastActionMessage = this.getActionMessage(lastAction)
