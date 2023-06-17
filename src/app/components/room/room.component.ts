@@ -7,6 +7,7 @@ import { RoomInfo } from 'src/app/model/RoomInfo';
 import { action } from 'src/app/model/action';
 import { ClientService } from 'src/app/service/client.service';
 import { FormatterService } from 'src/app/service/formatter.service';
+import { color } from 'src/app/model/colors'
 
 @Component({
   selector: 'app-room',
@@ -17,6 +18,7 @@ export class RoomComponent implements OnInit{
   roomInfo: RoomInfo;
   readonly roomId: number;
   readonly playerName: string;
+  mode: string;
   gameState?: Gamestate;
   playerHand?: Hand;
   hands?: Map<string, Hand>;
@@ -35,6 +37,7 @@ export class RoomComponent implements OnInit{
     this.playerName = state["playerName"]
     this.roomInfo = state["roomInfo"]
     this.roomId = this.roomInfo?.id !== undefined? this.roomInfo.id : 0
+    this.mode = "basic"
   }
 
   public ngOnInit() {
@@ -106,7 +109,9 @@ export class RoomComponent implements OnInit{
   }
 
   public startGame(): void {
-    this.clientService.startGame(this.roomId);
+    this.mode = (<HTMLSelectElement>document.getElementById("mode")).value
+    console.log("Start ", this.mode)
+    this.clientService.startGame(this.roomId, this.mode);
   }
 
   public getCards(player: string): Array<Card> {
@@ -148,7 +153,32 @@ export class RoomComponent implements OnInit{
   }
 
   public getColorNames(): Array<string> {
-    return this.formatterService.getColorNames()
+    if (this.gameState !== undefined) {
+      console.log("game info", this.gameState.gameInfo);
+      let arr: Array<string>;
+      arr = [];
+      for(var v of this.gameState.gameInfo.setOfColors) {
+        arr.push(Object.keys(color)[Object.values(color).indexOf(v)].toString().toLowerCase())
+      }
+      return arr
+    }
+    else 
+      return [];
+  }
+
+  public getColorNamesForHint(): Array<string> {
+    if (this.gameState !== undefined) {
+      console.log("game info", this.gameState.gameInfo);
+      let arr: Array<string>;
+      arr = [];
+      for(var v of this.gameState.gameInfo.setOfColors) {
+        if (v != color.RAINBOW && v != color.BLACK)
+          arr.push(Object.keys(color)[Object.values(color).indexOf(v)].toString().toLowerCase())
+      }
+      return arr
+    }
+    else 
+      return [];
   }
 
   public getColorName(colorNumber: number): string {
@@ -160,6 +190,7 @@ export class RoomComponent implements OnInit{
   }
 
   public getLgClassName(colorName: string): string {
+    console.log("color info", this.formatterService.getLgClassName(colorName));
     return this.formatterService.getLgClassName(colorName)
   }
 }

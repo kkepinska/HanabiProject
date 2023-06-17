@@ -5,7 +5,7 @@ import { action, playStructure, discardStructure, hintStructure } from '../model
   providedIn: 'root'
 })
 export class FormatterService {
-  private static readonly COLORS =  ['red', 'green', 'white', 'blue', 'yellow']
+  private static readonly COLORS =  ['red', 'green', 'white', 'blue', 'yellow', 'rainbow', 'black']
 
   constructor() { }
 

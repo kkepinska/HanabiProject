@@ -5,8 +5,20 @@
             </div>
             <div class="col-4 text-center p-4">
                 <button class="btn btn-secondary btn-lg" (click)="startGame()">
-                    Start game
+                    Start game <br>
                 </button>
+                <label for="mode">Choose mode:</label>
+
+                <select name="mode" id="mode">
+                  <option value="basic">basic</option>
+                  <option value="small">small</option>
+                  <option value="rainbow">rainbow</option>
+                  <option value="black">black</option>
+                  <option value="rainbow_c">rainbow critical</option>
+                  <option value="black_c">black critical</option>
+                  <option value="hard">rainbow + black</option>
+                  <option value="hard_c">rainbow + black critical</option>
+                </select> 
             </div>
             <div class="col-4">
             </div>
@@ -44,7 +56,7 @@
                         </ng-container>
                         <ng-container *ngIf = "colorScore !== 0">
                             <div class="col-xl col-2">
-                                <img class="img-responsive" src="assets/images/{{i + 1}}{{colorScore}}.png">
+                                <img class="img-responsive" src="assets/images/{{gameState.gameInfo.setOfColors[i]}}{{colorScore}}.png">
                             </div>
                         </ng-container>
                     </ng-container>
@@ -84,7 +96,7 @@
                                         <button class="btn btn-primary dropdown-toggle me-2"  data-bs-toggle="dropdown">hint color</button>
                                         <div class="dropdown-menu">
                                             <div class="btn-group btn-group-lg">
-                                                <ng-container *ngFor = "let colorName of getColorNames(); let i = index">
+                                                <ng-container *ngFor = "let colorName of getColorNamesForHint(); let i = index">
                                                     <button [className]="getClassName(colorName)" (click)="hintCard(player, 'color', i + 1)">
                                                         &#10003;
                                                     </button>

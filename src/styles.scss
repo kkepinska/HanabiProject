@@ -7,6 +7,8 @@ $card-green: rgb(27, 167, 2);
 $card-blue: rgb(17, 138, 227);
 $card-yellow: rgb(247, 182, 8);
 $card-white: rgb(255, 255, 255);
+$card-black: rgb(0, 0, 0);
+$card-rainbow: rgb(123, 58, 139);
 
 $primary: $bg-green;
 
@@ -74,6 +76,22 @@ $container-max-widths: (
         background-color: darken($card-white, 5%)
     }
 }
+.card-rainbow{
+    @extend .btn;
+    color: $card-rainbow;
+    background-color: $card-rainbow;
+    &:hover{
+        background-color: darken($card-rainbow, 5%)
+    }
+}
+.card-black{
+    @extend .btn;
+    color: $card-black;
+    background-color: $card-black;
+    &:hover{
+        background-color: darken($card-black, 5%)
+    }
+}
 
 .card-red-lg{
     @extend .btn;
@@ -114,6 +132,22 @@ $container-max-widths: (
     pointer-events: none;
     color: $card-white;
     background-color: $card-white;
+}
+.card-rainbow-lg{
+    @extend .btn;
+     
+    @extend .me-2;
+    pointer-events: none;
+    color: $card-rainbow;
+    background-color: $card-rainbow;
+}
+.card-black-lg{
+    @extend .btn;
+     
+    @extend .me-2;
+    pointer-events: none;
+    color: $card-black;
+    background-color: $card-black;
 }
 
 .gradient {

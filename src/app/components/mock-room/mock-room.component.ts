@@ -32,7 +32,7 @@ export class MockRoomComponent {
     maxHints: 8,
     handSize: 5,
     numberOfPlayers: 3,
-    setOfColors: new Set<color>([color.RED, color.GREEN, color.BLUE, color.YELLOW, color.WHITE]),
+    setOfColors: new Array<color>(color.RED, color.GREEN, color.BLUE, color.YELLOW, color.WHITE),
     raindbowCritical: false,
     blackCritical: false
   }
