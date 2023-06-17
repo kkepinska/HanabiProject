@@ -32,7 +32,7 @@ export class MockRoomComponent {
     maxHints: 8,
     handSize: 5,
     numberOfPlayers: 3,
-    setOfColors: new Array<color>(color.RED, color.GREEN, color.BLUE, color.YELLOW, color.WHITE),
+    setOfColors: [color.RED, color.GREEN, color.BLUE, color.WHITE, color.RAINBOW],
     raindbowCritical: false,
     blackCritical: false
   }
@@ -46,7 +46,7 @@ export class MockRoomComponent {
 
   lastActionMessage = "The game has not started yet"
 
-  colorsEnum = [color.RED, color.GREEN, color.BLUE, color.YELLOW, color.WHITE]
+  colorsEnum = [color.RED, color.GREEN, color.BLUE, color.YELLOW, color.RAINBOW]
   ranks = [1, 2, 3, 4, 5]
 
   public constructor(
