@@ -78,6 +78,8 @@ export class MockRoomComponent {
         lifeTokens: 10,
         currentPlayer: this.playerName,
         history: [
+          playAction,
+          playAction,
           playAction
         ],
         end_of_game: false,
@@ -192,5 +194,9 @@ export class MockRoomComponent {
 
   public getLgClassName(colorName: string): string {
     return this.formatterService.getLgClassName(colorName)
+  }
+
+  public startGame(): void {
+
   }
 }

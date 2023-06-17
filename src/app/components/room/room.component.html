@@ -8,7 +8,6 @@
                     Start game <br>
                 </button>
                 <label for="mode">Choose mode:</label>
-
                 <select name="mode" id="mode">
                   <option value="basic">basic</option>
                   <option value="small">small</option>
@@ -25,28 +24,42 @@
         </div>
     </div>
 </ng-container>
-<ng-container *ngIf = "gameState !== undefined && gameState.end_of_game == false">
+<ng-container *ngIf = "gameState !== undefined && gameState.end_of_game === false">
     <div class="site-header sticky-top bg-primary py-2">
         <div class="row">
-            <div class="col-xl-4 col-lg-4 col-md-3 col">
-                <div class="d-none d-md-block">
+            <div class="col-xl-4 col-lg-2 col-md-3 col-sm-4">
+                <div >
                     <p class="h3 text-secondary ms-4 mt-2">
                         Current player: {{ gameState.currentPlayer }}
                     </p>
                 </div>
-                <p class="h5 ms-4">
-                    {{ lastActionMessage }}
-                </p>
             </div>
-            <div class="col-xl-4 col-lg-3 col-md-3 col">
-                <p class="h4 text-secondary mt-2 ms-4">
-                    Available hints: {{ gameState.availableHints }}
-                </p>
-                <p class="h4 text-secondary ms-4">
-                    Lives: {{gameState.lifeTokens}}
-                </p>
+            <div class="col-xl-4 col-lg-5 col-md-3 col-sm-8">
+                <div class="row">
+                    <div class="col-xl-6 col">
+                        <div class="row">
+                            <div class="col-md-12 col-6">
+                                <p class="h4 text-secondary mt-2 ms-4">
+                                    Hints: {{ gameState.availableHints }}/{{ gameState.gameInfo.maxHints }}
+                                </p>
+                            </div>
+                            <div class="col-md-12 col-6">
+                                <p class="h4 text-secondary mt-2 ms-4">
+                                    Lives: {{ gameState.lifeTokens }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col">
+                        <button class="btn btn-lg btn-secondary mt-2" data-bs-toggle="modal" [attr.data-bs-target]="'#history-modal'">
+                            <p class="h5">
+                                Show history
+                            </p>
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12 col-xs-12">
+            <div class="col-xl-4 col-lg-5 col-md-6 col-sm-9 col-xs-12">
                 <div class="row flex-nowrap gx-2 mt-2 mx-4">
                     <ng-container *ngFor = "let colorScore of gameState.currentScore; let i = index">
                         <ng-container *ngIf = "colorScore === 0">
@@ -64,18 +77,16 @@
             </div>
         </div>
     </div>
-</ng-container>
-<div class="container-fluid px-3">
-    <ng-container *ngIf = "gameState !== undefined && gameState.end_of_game == false">
+    <div class="container-fluid px-3">
         <div class = "row gy-4 py-4">
             <ng-container *ngFor = "let player of roomInfo?.players">
                 <ng-container *ngIf = "player !== playerName">
                     <div class="col-12 col-md-6 col-xxl-4 px-4">
                         <p class="h3">{{ player }}</p>
                         <div class="row flex-nowrap gx-2 py-2">
-                            <ng-container *ngFor = "let card of getCards(player)">
+                            <ng-container *ngFor = "let card of getCards(player); let i = index">
                                 <div class="col">
-                                    <img class="img-responsive" src="assets/images/{{card.color}}{{card.rank}}.png">
+                                    <img class="img-responsive" src="assets/images/{{gameState.gameInfo.setOfColors[card.color - 1]}}{{card.rank}}.png">
                                 </div>
                             </ng-container>
                         </div>
@@ -96,7 +107,7 @@
                                         <button class="btn btn-primary dropdown-toggle me-2"  data-bs-toggle="dropdown">hint color</button>
                                         <div class="dropdown-menu">
                                             <div class="btn-group btn-group-lg">
-                                                <ng-container *ngFor = "let colorName of getColorNamesForHint(); let i = index">
+                                                <ng-container *ngFor = "let colorName of getColorNames(); let i = index">
                                                     <button [className]="getClassName(colorName)" (click)="hintCard(player, 'color', i + 1)">
                                                         &#10003;
                                                     </button>
@@ -107,49 +118,49 @@
                                 </div>
                             </div>
                             <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary my-1" data-bs-toggle="modal" [attr.data-bs-target]="'#'+player">
-                            Show card knowledge
-                        </button>
-                        <!-- Modal -->
-                        <div class="modal fade" style="overflow: hidden;" id={{player}} data-bs-keyboard="false" style="overflow-y: scroll;">
-                            <div class="modal-dialog modal-xl">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                    </div>
-                                    <div class="modal-body row" style="height: 75vh; overflow-x: scroll; background-color: #e8f597 !important;">
-                                        <ng-container *ngFor = "let card of getCards(player)">
-                                            <div class="col-xl-4 col-12">
-                                                <div class="row flex-nowrap p-2">
-                                                    <div class="col-xl-4 col-3">
-                                                        <img class="img-responsive" src="assets/images/{{card.color}}{{card.rank}}.png">
-                                                    </div>
-                                                    <div class="col-xl-8 col-9">
-                                                        <p class="h5">Color knowledge:</p>
-                                                        <div class="d-flex flex-row">
-                                                            <ng-container *ngFor = "let color of card.colorKnowledge">
-                                                                <div class="d-flex flex-column">
-                                                                    <button [className]="getLgClassName(getColorName(color))" class=>
-                                                                        O
-                                                                    </button>
-                                                                </div>
-                                                            </ng-container>
+                            <button type="button" class="btn btn-primary my-1" data-bs-toggle="modal" [attr.data-bs-target]="'#'+player">
+                                Show card knowledge
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" style="overflow: hidden;" id={{player}} data-bs-keyboard="false" style="overflow-y: scroll;">
+                                <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body row" style="height: 75vh; overflow-x: scroll; background-color: #e8f597 !important;">
+                                            <ng-container *ngFor = "let card of getCards(player); let i = index">
+                                                <div class="col-xl-4 col-12">
+                                                    <div class="row flex-nowrap p-2">
+                                                        <div class="col-xl-4 col-3">
+                                                            <img class="img-responsive" src="assets/images/{{gameState.gameInfo.setOfColors[card.color - 1]}}{{card.rank}}.png">
                                                         </div>
-                                                        <p class="h5">Rank knowledge:</p>
-                                                        <div class="d-flex flex-row">
-                                                            <ng-container *ngFor = "let rank of card.rankKnowledge">
-                                                                <div class="d-flex flex-column">
-                                                                    <button class="btn btn-primary me-1" style="pointer-events: none">
-                                                                        {{ rank }}
-                                                                    </button>
-                                                                </div>
-                                                            </ng-container>
+                                                        <div class="col-xl-8 col-9">
+                                                            <p class="h5">Color knowledge:</p>
+                                                            <div class="d-flex flex-row">
+                                                                <ng-container *ngFor = "let color of card.colorKnowledge">
+                                                                    <div class="d-flex flex-column">
+                                                                        <button [className]="getLgClassName(getColorName(color))" class=>
+                                                                            O
+                                                                        </button>
+                                                                    </div>
+                                                                </ng-container>
+                                                            </div>
+                                                                <p class="h5">Rank knowledge:</p>
+                                                            <div class="d-flex flex-row">
+                                                                <ng-container *ngFor = "let rank of card.rankKnowledge">
+                                                                    <div class="d-flex flex-column">
+                                                                        <button class="btn btn-primary me-1" style="pointer-events: none">
+                                                                            {{ rank }}
+                                                                        </button>
+                                                                    </div>
+                                                                </ng-container>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </ng-container>
-                                    </div>
+                                            </ng-container>
+                                        </div>
                                     <div class="modal-footer">
                                     </div>
                                 </div>
@@ -194,25 +205,54 @@
                             </div>
                             <div class="col-xl-12 col-lg-4 col-sm-12 d-flex align-items-center">
                                 <ng-container *ngIf = "gameState?.currentPlayer === playerName">
-                                    <button class="btn btn-primary me-3" (click)="playCard(card)">play</button>
-                                    <button class="btn btn-primary me-3" (click)="discardCard(card)">discard</button>
+                                    <button class="btn btn-lg btn-primary me-3" (click)="playCard(card)">
+                                        play
+                                    </button>
+                                    <button class="btn btn-lg btn-primary me-3" (click)="discardCard(card)">
+                                        discard
+                                    </button>
                                 </ng-container>
                             </div>
                         </div>
                     </div>
                 </div>
             </ng-container>
-        </div> 
-    </ng-container>
+        </div>
+    </div>
+</ng-container>
+
+<div class="modal fade" style="overflow: hidden;" id="history-modal" data-bs-keyboard="false" style="overflow-y: scroll;">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body row" style="overflow-x: scroll; background-color: #e8f597 !important;">
+                <ul class="col-12 list-group">
+                    <ng-container *ngFor = "let action of gameState?.history;">
+                        <div class="row">
+                            <div class="col-12">
+                                <li class="list-group-item list-group-item-secondary">
+                                    {{ getActionMessage(action) }}
+                                </li>
+                            </div>
+                        </div>
+                    </ng-container>
+                </ul>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
 </div>
 
-<ng-container *ngIf = "gameState !== undefined && gameState.end_of_game == true">
+<ng-container *ngIf = "gameState !== undefined && gameState.end_of_game === true">
     <div class="container-fluid gradient">
         <div class="row">
             <div class="col-4">
             </div>
-                Game over. <br>
-                Your score is {{ gameState.score }}
+            Game over. <br>
+            Your score is {{ gameState.score }}
             <div class="col-4">
             </div>
         </div>
