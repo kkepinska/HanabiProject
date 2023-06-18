@@ -113,7 +113,7 @@ export class RoomComponent implements OnInit{
   public startGame(): void {
     this.mode = (<HTMLSelectElement>document.getElementById("mode")).value
     console.log("Start ", this.mode)
-    this.clientService.startGame(this.roomId, this.mode);
+    this.clientService.startGame(this.roomId, this.mode)
   }
 
   public getCards(player: string): Array<Card> {
@@ -133,7 +133,7 @@ export class RoomComponent implements OnInit{
     }
     let cardIdx = this.playerHand?.cards.indexOf(card)
     console.log('playCard', this.playerName, cardIdx, this.roomId)
-    this.clientService.playCard(this.playerName, cardIdx, this.roomId);
+    this.clientService.playCard(this.playerName, cardIdx, this.roomId)
   }
 
   public discardCard(card: Card): void {
@@ -142,49 +142,36 @@ export class RoomComponent implements OnInit{
     }
     let cardIdx = this.playerHand?.cards.indexOf(card)
     console.log('discardCard', this.playerName, cardIdx, this.roomId);
-    this.clientService.discardCard(this.playerName, cardIdx, this.roomId);
+    this.clientService.discardCard(this.playerName, cardIdx, this.roomId)
   }
 
   public hintCard(receiver: string, hintType: ("rank" | "color"), hintValue: number): void {
     console.log('hintCard', this.playerName, receiver, hintType, hintValue, this.roomId)
-    this.clientService.hintCard(this.playerName, receiver, hintType, hintValue, this.roomId);
+    this.clientService.hintCard(this.playerName, receiver, hintType, hintValue, this.roomId)
   }
 
   public getActionMessage(arg: action): string {
     return this.formatterService.getActionMessage(arg)
   }
 
+  public getColorName(colorNumber: number): string {
+    return this.formatterService.getColorName(colorNumber)
+  }
+
   public getColorNames(): Array<string> {
     if (this.gameState !== undefined) {
-      console.log("game info", this.gameState.gameInfo);
-      let arr: Array<string>;
-      arr = [];
-      for(var v of this.gameState.gameInfo.setOfColors) {
-        arr.push(Object.keys(color)[Object.values(color).indexOf(v)].toString().toLowerCase())
-      }
-      return arr
+        console.log("game info", this.gameState.gameInfo);
+        return this.formatterService.getColorNames(this.gameState.gameInfo.setOfColors)
     }
-    else 
-      return [];
+    return []
   }
 
   public getColorNamesForHint(): Array<string> {
     if (this.gameState !== undefined) {
       console.log("game info", this.gameState.gameInfo);
-      let arr: Array<string>;
-      arr = [];
-      for(var v of this.gameState.gameInfo.setOfColors) {
-        if (v != color.RAINBOW && v != color.BLACK)
-          arr.push(Object.keys(color)[Object.values(color).indexOf(v)].toString().toLowerCase())
-      }
-      return arr
+      return this.formatterService.getColorNamesForHint(this.gameState.gameInfo.setOfColors)
     }
-    else 
-      return [];
-  }
-
-  public getColorName(colorNumber: number): string {
-    return this.formatterService.getColorName(colorNumber)
+    return []
   }
 
   public getClassName(colorName: string): string {

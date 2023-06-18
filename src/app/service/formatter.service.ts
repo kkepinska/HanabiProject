@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { action, playStructure, discardStructure, hintStructure } from '../model/action';
+import { color } from '../model/colors';
 
 @Injectable({
   providedIn: 'root'
@@ -37,10 +38,25 @@ export class FormatterService {
     return hintAction.player + ' gave ' + hintAction.receiver + ' a hint about ' + hintAction.type + ' ' + hintValue
   }
 
-  public getColorNames(): Array<string> {
-    return [...FormatterService.COLORS]
+  public getColorNames(colors: Array<color>): Array<string> {
+    let arr: Array<string>
+    arr = [];
+    for (var v of colors) {
+      arr.push(Object.keys(color)[Object.values(color).indexOf(v)].toString().toLowerCase())
+    }
+    return arr
   }
   
+  public getColorNamesForHint(colors: Array<color>): Array<string> {
+    let arr: Array<string>;
+    arr = [];
+    for (var v of colors) {
+      if (v !== color.RAINBOW && v !== color.BLACK)
+        arr.push(Object.keys(color)[Object.values(color).indexOf(v)].toString().toLowerCase())
+      }
+    return arr
+  }
+
   public getColorName(colorNumber: number): string {
     return FormatterService.COLORS[colorNumber - 1]
   }

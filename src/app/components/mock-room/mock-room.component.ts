@@ -86,7 +86,7 @@ export class MockRoomComponent {
           playAction,
           playAction
         ],
-        end_of_game: true,
+        end_of_game: false,
         score: 0,
     }
     const lastAction = this.gameState.history[this.gameState.history.length - 1]
@@ -184,37 +184,24 @@ export class MockRoomComponent {
     return this.formatterService.getActionMessage(arg)
   }
 
+  public getColorName(colorNumber: number): string {
+    return this.formatterService.getColorName(colorNumber)
+  }
+
   public getColorNames(): Array<string> {
     if (this.gameState !== undefined) {
-      console.log("game info", this.gameState.gameInfo);
-      let arr: Array<string>;
-      arr = [];
-      for(var v of this.gameState.gameInfo.setOfColors) {
-        arr.push(Object.keys(color)[Object.values(color).indexOf(v)].toString().toLowerCase())
-      }
-      return arr
+        console.log("game info", this.gameState.gameInfo);
+        return this.formatterService.getColorNames(this.gameState.gameInfo.setOfColors)
     }
-    else 
-      return [];
+    return []
   }
 
   public getColorNamesForHint(): Array<string> {
     if (this.gameState !== undefined) {
       console.log("game info", this.gameState.gameInfo);
-      let arr: Array<string>;
-      arr = [];
-      for(var v of this.gameState.gameInfo.setOfColors) {
-        if (v != color.RAINBOW && v != color.BLACK)
-          arr.push(Object.keys(color)[Object.values(color).indexOf(v)].toString().toLowerCase())
-      }
-      return arr
+      return this.formatterService.getColorNamesForHint(this.gameState.gameInfo.setOfColors)
     }
-    else 
-      return [];
-  }
-
-  public getColorName(colorNumber: number): string {
-    return this.formatterService.getColorName(colorNumber)
+    return []
   }
 
   public getClassName(colorName: string): string {
