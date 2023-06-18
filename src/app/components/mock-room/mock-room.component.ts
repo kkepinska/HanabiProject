@@ -27,6 +27,7 @@ export class MockRoomComponent {
         MockRoomComponent.PLAYER3
     ],
     isPublic : true,
+    mode: "basic"
   }
   private static GAME_INFO : GameInfo = {
     maxHints: 8,
@@ -44,6 +45,7 @@ export class MockRoomComponent {
   playerHand?: Hand;
   hands?: Map<string, Hand>;
 
+  mode?: string = undefined
   lastActionMessage = "The game has not started yet"
 
   colorsEnum = [color.RED, color.GREEN, color.BLUE, color.YELLOW, color.RAINBOW]
@@ -87,6 +89,7 @@ export class MockRoomComponent {
     }
     const lastAction = this.gameState.history[this.gameState.history.length - 1]
     this.lastActionMessage = this.getActionMessage(lastAction)
+    this.gameState = undefined
   }
 
   private getHands(): Map<string, Hand> {

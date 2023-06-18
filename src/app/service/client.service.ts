@@ -14,6 +14,8 @@ export class ClientService {
   private readonly socket = io(ClientService.SOCKET_PATH);
   public readonly rooms$: Subject<RoomInfo> = new Subject<RoomInfo>();
 
+  public readonly createdRoom$: Subject<RoomInfo> = new Subject<RoomInfo>();
+
   constructor() { }
 
   login(login: string): void {
@@ -43,9 +45,9 @@ export class ClientService {
     });
   }
 
-  public createRoom(isPublic: boolean) {
+  public createRoom(isPublic: boolean, mode: string, playerCount: number) {
     console.log('creating new room in service')
-    this.socket.emit('createRoom', isPublic);
+    this.socket.emit('createRoom', isPublic, mode, playerCount);
   }
 
   public joinRoom(roomId: number, playerName: string) {
@@ -58,7 +60,7 @@ export class ClientService {
       this.rooms$.next(roomInfo);
     });
     return this.rooms$.asObservable();
-  };
+  }
 
   public getJoinRoom() {
     this.socket.on('joinRoom', (updatedRoom: RoomInfo) =>{
@@ -68,6 +70,13 @@ export class ClientService {
       )
     });
     return this.rooms$.asObservable();
+  }
+
+  public getCreatedRoom() {
+    this.socket.on('createdRoom', (roomInfo: RoomInfo) =>{
+      this.createdRoom$.next(roomInfo);
+    });
+    return this.createdRoom$.asObservable();
   };
 
   public receiveUpdateRoom() {

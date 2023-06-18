@@ -3,4 +3,5 @@ export interface RoomInfo {
     playerCount : number,
     players: string[],
     isPublic : boolean,
+    mode: string
 }

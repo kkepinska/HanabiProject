@@ -1,14 +1,28 @@
-<div class="col p-2">
-    <div class="rounded border border-secondary p-2">
-        <div class="row px-4 py-2">
-            <div class="col-8">
-                <p class="h3 text-secondary">Room {{ room?.id }}</p>
-                <p class="h5">Players in this room:</p>
-                <p class="h5">{{ room?.players }}</p>
-            </div>
-            <div class="col-4 d-flex align-items-center justify-content-end">
-                <app-button [text] = "joinRoomText" (clicked)="joinRoom()"></app-button>
+<ng-container *ngIf = "room !== undefined">
+    <div class="col p-2">
+        <div class="rounded border border-secondary p-2">
+            <div class="row px-4 py-2">
+                <div class="col-8">
+                    <p class="h3 text-secondary">Room {{ room.id }}</p>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 col">
+                            <p class="h5 text-secondary">
+                                Players: {{ room.players.length }} / {{ room.playerCount }}
+                            </p>
+                        </div>
+                        <div class="col-lg-6 col-md-7 col">
+                            <p class="h5 text-secondary">
+                                Mode: {{ getModeName(room.mode) }}
+                            </p>
+                        </div>
+                    </div>
+                    <p class="h5">Players in this room:</p>
+                    <p class="h5">{{ room.players }}</p>
+                </div>
+                <div class="col-4 d-flex align-items-center justify-content-end">
+                    <app-button [text] = "joinRoomText" (clicked)="joinRoom()"></app-button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</ng-container>

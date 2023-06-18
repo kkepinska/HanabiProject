@@ -95,8 +95,10 @@ export class RoomComponent implements OnInit{
     this.playerHand = allHands.get(this.playerName)
     this.hands = allHands
 
-    const lastAction = this.gameState.history[this.gameState.history.length - 1]
-    this.lastActionMessage = this.getActionMessage(lastAction)
+    if (this.gameState.history.length > 0) {
+        const lastAction = this.gameState.history[this.gameState.history.length - 1]
+        this.lastActionMessage = this.getActionMessage(lastAction)
+    }
   }
 
   private receiveUpdate(): void {

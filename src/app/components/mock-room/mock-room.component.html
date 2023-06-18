@@ -4,20 +4,18 @@
             <div class="col-4">
             </div>
             <div class="col-4 text-center p-4">
+                <div class="h3">
+                    Players: {{ this.roomInfo.players.length }}/{{ this.roomInfo.playerCount }} 
+                </div>
+                <div class="h5">
+                    {{ this.roomInfo.players }}
+                </div>
+                <div class="h5">
+                    {{ this.roomInfo.mode }}
+                </div>
                 <button class="btn btn-secondary btn-lg" (click)="startGame()">
                     Start game <br>
                 </button>
-                <label for="mode">Choose mode:</label>
-                <select name="mode" id="mode">
-                  <option value="basic">basic</option>
-                  <option value="small">small</option>
-                  <option value="rainbow">rainbow</option>
-                  <option value="black">black</option>
-                  <option value="rainbow_c">rainbow critical</option>
-                  <option value="black_c">black critical</option>
-                  <option value="hard">rainbow + black</option>
-                  <option value="hard_c">rainbow + black critical</option>
-                </select> 
             </div>
             <div class="col-4">
             </div>

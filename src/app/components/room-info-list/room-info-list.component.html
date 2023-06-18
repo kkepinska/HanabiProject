@@ -1,9 +1,56 @@
-<div class="overflow-auto" style="max-height: 60%;">
-    <div class="row">
-        <app-room-info *ngFor="let room of roomList" 
-            [room] = "room" [playerName] = "playerName"></app-room-info>
+<div>
+    <ng-container *ngIf = "mode === undefined || playerCount === undefined">
+        <button class="btn btn-secondary btn-lg mx-2 my-1" disabled>
+            Create new room
+        </button>
+    </ng-container>
+    <ng-container *ngIf = "mode !== undefined && playerCount !== undefined">
+        <button class="btn btn-secondary btn-lg mx-2 my-1" (click)="createNewRoom()">
+            Create new room
+        </button>
+    </ng-container>
+</div>
+<div class="btn-group">
+    <div class="dropdown">
+        <button class="btn btn-secondary btn-md dropdown-toggle mx-2"  data-bs-toggle="dropdown">
+            <ng-container *ngIf = "mode === undefined">
+                Select game mode
+            </ng-container>
+            <ng-container *ngIf = "mode !== undefined">
+                {{ getModeName(mode) }}
+            </ng-container>
+        </button>
+        <div class="dropdown-menu center-block">
+            <ng-container *ngFor = "let modeName of getGameModeNames()">
+                <button class="dropdown-item" (click)="setMode(modeName)">
+                    {{ modeName }}
+                </button>
+            </ng-container>
+        </div>
+    </div>
+    <div class="dropdown">
+        <button class="btn btn-secondary btn-md dropdown-toggle mx-2"  data-bs-toggle="dropdown">
+            <ng-container *ngIf = "playerCount === undefined">
+                Select player count
+            </ng-container>
+            <ng-container *ngIf = "playerCount !== undefined">
+                {{ playerCount }}
+            </ng-container>
+        </button>
+        <div class="dropdown-menu center-block">
+            <ng-container *ngFor = "let count of getPlayerConuts()">
+                <button class="dropdown-item" (click)="setPlayerCount(count)">
+                    {{ count }}
+                </button>
+            </ng-container>
+        </div>
     </div>
 </div>
-<div class="col p-4">
-    <app-button [text] = "createRoomText" (clicked)="createNewRoom()"></app-button>
+<div class="overflow-auto" style="max-height: 60%;">
+    <div class="row">
+        <div class="col-12">
+            <app-room-info *ngFor="let room of roomList" 
+            [room] = "room" [playerName] = "playerName"></app-room-info>
+        </div>
+    </div>
 </div>

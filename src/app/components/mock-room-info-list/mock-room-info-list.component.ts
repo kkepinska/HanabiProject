@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { RoomInfo } from '../../model/RoomInfo';
+import { RoomInfoListComponent } from '../room-info-list/room-info-list.component';
 
 @Component({
   selector: 'app-mock-room-info-list',
@@ -7,7 +8,8 @@ import { RoomInfo } from '../../model/RoomInfo';
   styleUrls: ['./mock-room-info-list.component.scss']
 })
 export class MockRoomInfoListComponent {
-  readonly createRoomText = "create new room";
+  mode?: string = undefined
+  playerCount?: number = undefined
 
   @Input() playerName?: string;
   roomList: RoomInfo[] = [
@@ -20,6 +22,7 @@ export class MockRoomInfoListComponent {
         'Player with a rather long username'
       ],
       isPublic : true,
+      mode: "basic"
     },
     {
       id : 4423,
@@ -31,6 +34,7 @@ export class MockRoomInfoListComponent {
         'Player 8',
       ],
       isPublic : true,
+      mode: "black"
     },
     {
       id : 900,
@@ -41,6 +45,7 @@ export class MockRoomInfoListComponent {
         'Player 752',
       ],
       isPublic : true,
+      mode: "hard_c"
     },
     {
       id : 88421,
@@ -50,6 +55,7 @@ export class MockRoomInfoListComponent {
         'Player 90',
       ],
       isPublic : true,
+      mode: "rainbow"
     },
     {
       id : 10042,
@@ -58,10 +64,27 @@ export class MockRoomInfoListComponent {
         'Player 346',
       ],
       isPublic : true,
+      mode: "basic"
     }
   ]
 
   createNewRoom() {
     console.log('Creating new room')
+  }
+
+  public getGameModeNames(): Array<string> {
+    return Array.from(RoomInfoListComponent.MODE_NAME_TO_MODE.keys())
+  }
+
+  public setMode(modeName: string): void {
+    this.mode = RoomInfoListComponent.MODE_NAME_TO_MODE.get(modeName)
+  }
+
+  public getPlayerConuts(): Array<number> {
+    return RoomInfoListComponent.PLAYER_COUNTS
+  }
+
+  public setPlayerCount(playerCount: number): void {
+    this.playerCount = playerCount
   }
 }
