@@ -28,7 +28,8 @@ export class LoginComponent implements OnInit {
       if (this.isValid){
         //this.router.navigate(["./../lobby", msg[1]])
         this.router.navigateByUrl('/lobby', {
-          state: { playerName: msg[1]}} )
+          state: { playerName: msg[1]}
+        })
       } else {
         this.errorMessage = "Name " + this.login + " is already used"
       }

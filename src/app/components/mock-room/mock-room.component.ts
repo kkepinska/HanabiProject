@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Card } from 'src/app/model/Card';
 import { GameInfo } from 'src/app/model/GameInfo';
 import { Gamestate } from 'src/app/model/Gamestate';
@@ -52,7 +53,8 @@ export class MockRoomComponent {
   ranks = [1, 2, 3, 4, 5]
 
   public constructor(
-    private readonly formatterService: FormatterService
+    private readonly formatterService: FormatterService,
+    private readonly router: Router
     ) {
     this.playerName = MockRoomComponent.PLAYER1
     this.roomInfo = MockRoomComponent.ROOM_INFO
@@ -84,12 +86,11 @@ export class MockRoomComponent {
           playAction,
           playAction
         ],
-        end_of_game: false,
+        end_of_game: true,
         score: 0,
     }
     const lastAction = this.gameState.history[this.gameState.history.length - 1]
     this.lastActionMessage = this.getActionMessage(lastAction)
-    this.gameState = undefined
   }
 
   private getHands(): Map<string, Hand> {
@@ -224,7 +225,9 @@ export class MockRoomComponent {
     return this.formatterService.getLgClassName(colorName)
   }
 
-  public startGame(): void {
+  public startGame(): void {}
 
+  public navigateToLobby(): void {
+    this.router.navigateByUrl('/mockLobby')
   }
 }

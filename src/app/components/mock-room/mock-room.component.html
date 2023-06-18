@@ -252,11 +252,22 @@
 <ng-container *ngIf = "gameState !== undefined && gameState.end_of_game === true">
     <div class="container-fluid gradient">
         <div class="row">
-            <div class="col-4">
+            <div class="col-lg-3">
             </div>
-            Game over. <br>
-            Your score is {{ gameState.score }}
-            <div class="col-4">
+            <div class="col-lg-6 col-md-12 col text-center">
+                <div class="display-1 my-4 text-secondary">
+                    Game over
+                </div>
+                <div class="h2 my-3">
+                    Your score is {{ gameState.score }}
+                </div>
+                <button class="btn btn-lg btn-secondary me-3 my-2" (click)="navigateToLobby()">
+                    <div class="p4">
+                        go back to lobby
+                    </div>
+                </button>
+            </div>
+            <div class="col-lg-3">
             </div>
         </div>
     </div>

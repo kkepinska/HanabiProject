@@ -195,4 +195,10 @@ export class RoomComponent implements OnInit{
     console.log("color info", this.formatterService.getLgClassName(colorName));
     return this.formatterService.getLgClassName(colorName)
   }
+
+  public navigateToLobby(): void {
+    this.router.navigateByUrl('/lobby', {
+      state: { playerName: this.playerName }
+    })
+  }
 }
