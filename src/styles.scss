@@ -9,6 +9,8 @@ $card-yellow: rgb(247, 182, 8);
 $card-white: rgb(255, 255, 255);
 $card-black: rgb(0, 0, 0);
 $card-rainbow: rgb(123, 58, 139);
+$card-orange: rgb(253, 102, 8);
+$card-purple: rgb(102, 0, 217);
 
 $primary: $bg-green;
 
@@ -38,7 +40,7 @@ $container-max-widths: (
 
 .card-red{
     @extend .btn;
-    color: $card-red;
+    color: rgba(0,0,0,0);
     background-color: $card-red;
     &:hover{
         background-color: darken($card-red, 5%)
@@ -46,7 +48,7 @@ $container-max-widths: (
 }
 .card-green{
     @extend .btn;
-    color: $card-green;
+    color: rgba(0,0,0,0);
     background-color: $card-green;
     &:hover{
         background-color: darken($card-green, 5%)
@@ -54,7 +56,7 @@ $container-max-widths: (
 }
 .card-blue{
     @extend .btn;
-    color: $card-blue;
+    color: rgba(0,0,0,0);
     background-color: $card-blue;
     &:hover{
         background-color: darken($card-blue, 5%)
@@ -62,7 +64,7 @@ $container-max-widths: (
 }
 .card-yellow{
     @extend .btn;
-    color: $card-yellow;
+    color: rgba(0,0,0,0);
     background-color: $card-yellow;
     &:hover{
         background-color: darken($card-yellow, 5%)
@@ -70,7 +72,7 @@ $container-max-widths: (
 }
 .card-white{
     @extend .btn;
-    color: $card-white;
+    color: rgba(0,0,0,0);
     background-color: $card-white;
     &:hover{
         background-color: darken($card-white, 5%)
@@ -78,15 +80,19 @@ $container-max-widths: (
 }
 .card-rainbow{
     @extend .btn;
-    color: $card-rainbow;
+    color: rgba(0,0,0,0);
     background-color: $card-rainbow;
+    background: -webkit-linear-gradient(45deg, $card-red, $card-orange, $card-yellow, $card-green, $card-blue, $card-purple); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(45deg, $card-red, $card-orange, $card-yellow, $card-green, $card-blue, $card-purple); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(45deg, $card-red, $card-orange, $card-yellow, $card-green, $card-blue, $card-purple); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(45deg, $card-red, $card-orange, $card-yellow, $card-green, $card-blue, $card-purple); /* Standard syntax (must be last) */
     &:hover{
         background-color: darken($card-rainbow, 5%)
     }
 }
 .card-black{
     @extend .btn;
-    color: $card-black;
+    color: rgba(0,0,0,0);
     background-color: $card-black;
     &:hover{
         background-color: darken($card-black, 5%)
@@ -98,7 +104,7 @@ $container-max-widths: (
      
     @extend .me-2;
     pointer-events: none;
-    color: $card-red;
+    color: rgba(0,0,0,0);
     background-color: $card-red;
 }
 .card-green-lg{
@@ -106,7 +112,7 @@ $container-max-widths: (
      
     @extend .me-2;
     pointer-events: none;
-    color: $card-green;
+    color: rgba(0,0,0,0);
     background-color: $card-green;
 }
 .card-blue-lg{
@@ -114,7 +120,7 @@ $container-max-widths: (
      
     @extend .me-2;
     pointer-events: none;
-    color: $card-blue;
+    color: rgba(0,0,0,0);
     background-color: $card-blue;
 }
 .card-yellow-lg{
@@ -122,7 +128,7 @@ $container-max-widths: (
      
     @extend .me-2;
     pointer-events: none;
-    color: $card-yellow;
+    color: rgba(0,0,0,0);
     background-color: $card-yellow;
 }
 .card-white-lg{
@@ -130,7 +136,7 @@ $container-max-widths: (
      
     @extend .me-2;
     pointer-events: none;
-    color: $card-white;
+    color: rgba(0,0,0,0);
     background-color: $card-white;
 }
 .card-rainbow-lg{
@@ -138,15 +144,19 @@ $container-max-widths: (
      
     @extend .me-2;
     pointer-events: none;
-    color: $card-rainbow;
+    color: rgba(0,0,0,0);
     background-color: $card-rainbow;
+    background: -webkit-linear-gradient(45deg, $card-red, $card-orange, $card-yellow, $card-green, $card-blue, $card-purple); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(45deg, $card-red, $card-orange, $card-yellow, $card-green, $card-blue, $card-purple); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(45deg, $card-red, $card-orange, $card-yellow, $card-green, $card-blue, $card-purple); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(45deg, $card-red, $card-orange, $card-yellow, $card-green, $card-blue, $card-purple); /* Standard syntax (must be last) */
 }
 .card-black-lg{
     @extend .btn;
-     
+
     @extend .me-2;
     pointer-events: none;
-    color: $card-black;
+    color: rgba(0,0,0,0);
     background-color: $card-black;
 }
 

@@ -92,7 +92,6 @@ export class MockRoomComponent {
     }
     const lastAction = this.gameState.history[this.gameState.history.length - 1]
     this.lastActionMessage = this.getActionMessage(lastAction)
-    this.gameState = undefined
   }
 
   private getHands(): Map<string, Hand> {
@@ -115,7 +114,7 @@ export class MockRoomComponent {
       {
         color: this.colorsEnum[this.getRandom() - 1],
         rank: this.getRandom(),
-        colorKnowledge: [color.GREEN, color.BLUE, color.WHITE],
+        colorKnowledge: [color.GREEN, color.RAINBOW, color.WHITE],
         rankKnowledge: [1,2,3,4,5],
       },
       {
@@ -127,7 +126,7 @@ export class MockRoomComponent {
       {
         color: this.colorsEnum[this.getRandom() - 1],
         rank: this.getRandom(),
-        colorKnowledge: [color.RED, color.YELLOW, color.WHITE],
+        colorKnowledge: [color.RAINBOW, color.YELLOW, color.WHITE],
         rankKnowledge: [3,4],
       },
       {
