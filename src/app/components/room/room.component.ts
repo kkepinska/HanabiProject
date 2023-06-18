@@ -51,11 +51,13 @@ export class RoomComponent implements OnInit{
 
   private receiveGetPlayers(): void {
     this.clientService.receiveUpdateRoom().subscribe((roomInfo: RoomInfo) => {
-      this.roomInfo = roomInfo
-      if (this.roomInfo.players.length === this.roomInfo.playerCount 
-        && this.roomInfo.players[0] === this.playerName) {
-          console.log("Starting game", this.mode)
-          this.clientService.startGame(this.roomId)
+      if (roomInfo.id === this.roomId) {
+        this.roomInfo = roomInfo
+        if (this.roomInfo.players.length === this.roomInfo.playerCount 
+          && this.roomInfo.players[0] === this.playerName) {
+            console.log("Starting game", this.mode)
+            this.clientService.startGame(this.roomId)
+        }
       }
     })
   }
@@ -182,7 +184,6 @@ export class RoomComponent implements OnInit{
   }
 
   public getLgClassName(colorName: string): string {
-    console.log("color info", this.formatterService.getLgClassName(colorName));
     return this.formatterService.getLgClassName(colorName)
   }
 
