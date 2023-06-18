@@ -91,6 +91,7 @@ export class MockRoomComponent {
     }
     const lastAction = this.gameState.history[this.gameState.history.length - 1]
     this.lastActionMessage = this.getActionMessage(lastAction)
+    this.gameState = undefined
   }
 
   private getHands(): Map<string, Hand> {
@@ -211,8 +212,6 @@ export class MockRoomComponent {
   public getLgClassName(colorName: string): string {
     return this.formatterService.getLgClassName(colorName)
   }
-
-  public startGame(): void {}
 
   public navigateToLobby(): void {
     this.router.navigateByUrl('/mockLobby')

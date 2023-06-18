@@ -33,7 +33,7 @@ export class RoomComponent implements OnInit{
     private readonly clientService: ClientService,
     private readonly formatterService: FormatterService
   ) {
-    var state: any = this.router.getCurrentNavigation()?.extras.state
+    let state: any = this.router.getCurrentNavigation()?.extras.state
     this.playerName = state["playerName"]
     this.roomInfo = state["roomInfo"]
     this.roomId = this.roomInfo?.id !== undefined? this.roomInfo.id : 0
@@ -44,14 +44,19 @@ export class RoomComponent implements OnInit{
     if (this.playerName !== undefined) {
       this.clientService.joinRoom(this.roomId, this.playerName)
     }
-    this.receiveGetPlayers();
-    this.recieveStartGame();
-    this.receiveUpdate();
+    this.receiveGetPlayers()
+    this.recieveStartGame()
+    this.receiveUpdate()
   }
 
   private receiveGetPlayers(): void {
     this.clientService.receiveUpdateRoom().subscribe((roomInfo: RoomInfo) => {
-      this.roomInfo = roomInfo;
+      this.roomInfo = roomInfo
+      if (this.roomInfo.players.length === this.roomInfo.playerCount 
+        && this.roomInfo.players[0] === this.playerName) {
+          console.log("Starting game", this.mode)
+          this.clientService.startGame(this.roomId)
+      }
     })
   }
 
@@ -108,12 +113,6 @@ export class RoomComponent implements OnInit{
       let handsArray = msg[1]
       this.setGameState(gameState, handsArray)
     });
-  }
-
-  public startGame(): void {
-    this.mode = (<HTMLSelectElement>document.getElementById("mode")).value
-    console.log("Start ", this.mode)
-    this.clientService.startGame(this.roomId, this.mode)
   }
 
   public getCards(player: string): Array<Card> {

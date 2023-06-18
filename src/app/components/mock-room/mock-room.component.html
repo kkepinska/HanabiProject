@@ -1,23 +1,23 @@
 <ng-container *ngIf = "gameState == undefined">
     <div class="container-fluid gradient">
         <div class="row">
-            <div class="col-4">
+            <div class="col-lg-3 col">
             </div>
-            <div class="col-4 text-center p-4">
-                <div class="h3">
+            <div class="col-lg-6 text-center my-2 p-4">
+                <div class="display-1 text-secondary">
                     Players: {{ this.roomInfo.players.length }}/{{ this.roomInfo.playerCount }} 
                 </div>
-                <div class="h5">
+                <div class="h3 my-2">
                     {{ this.roomInfo.players }}
                 </div>
-                <div class="h5">
-                    {{ this.roomInfo.mode }}
+                <div class="h2 text-secondary my-2">
+                    Game mode: {{ this.roomInfo.mode }}
                 </div>
-                <button class="btn btn-secondary btn-lg" (click)="startGame()">
-                    Start game <br>
-                </button>
+                <div class="h2 text-secondary my-4">
+                    Waitnig for others to join...
+                </div>
             </div>
-            <div class="col-4">
+            <div class="col-lg-3 col">
             </div>
         </div>
     </div>

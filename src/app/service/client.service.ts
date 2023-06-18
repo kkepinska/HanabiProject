@@ -87,8 +87,8 @@ export class ClientService {
     });
   }
 
-  public startGame(gameId: number, mode: string) {
-    this.socket.emit('startGame', gameId, mode);
+  public startGame(gameId: number) {
+    this.socket.emit('startGame', gameId);
   }
 
   recieveStartGame() {
