@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
   }
 
   private validate(login : string) : boolean {
-    return true
+    return !(/\s/).test(login) && (/[a-zA-Z]/).test(login[0])
   }
 
   joinMockRoom() {

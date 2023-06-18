@@ -24,7 +24,6 @@ export class RoomComponent implements OnInit{
   playerHand?: Hand;
   hands?: Map<string, Hand>;
 
-
   lastActionMessage = "The game has not started yet"
 
   ranks = [1, 2, 3, 4, 5]

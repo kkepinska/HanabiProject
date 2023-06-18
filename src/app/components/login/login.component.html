@@ -13,8 +13,14 @@
                 <input [(ngModel)]="login" class="form-control" type="text" id="login" name="login" 
                 required minlength="4" maxlength="20" size="20" placeholder="login">
             </form>
+            <div class="h5 text-secondary my-1">
+                Type your name and press enter.
+            </div>
             <div class="h5 text-secondary">
-                {{errorMessage}}
+                Name must start with a letter and cannot contain spaces.
+            </div>
+            <div class="h5 text-secondary">
+                {{ errorMessage }}
             </div>
             <div>
                 <button class="btn btn-secondary btn-lg my-4" (click)="joinMockRoom()">
