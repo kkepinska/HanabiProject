@@ -37,8 +37,6 @@ export class RoomInfoListComponent implements OnInit {
   mode?: string = undefined
   playerCount?: number = undefined
 
-  public readonly createRoomText = "create new room";
-
   @Input() public playerName?: string;
   public roomList: Array<RoomInfo> = []
 
@@ -80,7 +78,6 @@ export class RoomInfoListComponent implements OnInit {
   }
 
   public createNewRoom(): void {
-    console.log("In createNewRoom()")
     if (this.mode !== undefined && this.playerCount !== undefined) {
       console.log('Creating new room (', this.mode, this.playerCount, ")")
       this.clientService.createRoom(true, this.mode, this.playerCount)

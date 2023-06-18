@@ -20,7 +20,9 @@
                     <p class="h5">{{ room.players }}</p>
                 </div>
                 <div class="col-4 d-flex align-items-center justify-content-end">
-                    <app-button [text] = "joinRoomText" (clicked)="joinRoom()"></app-button>
+                    <button class="btn btn-secondary btn-lg mx-4" (click)="joinRoom()">
+                        join room
+                    </button>
                 </div>
             </div>
         </div>

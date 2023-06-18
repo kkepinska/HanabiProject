@@ -6,7 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { ButtonComponent } from './components/button/button.component';
 import { RoomComponent } from './components/room/room.component';
 import { LoginComponent } from './components/login/login.component';
 import { LobbyComponent } from './components/lobby/lobby.component';
@@ -19,7 +18,6 @@ import { MockRoomInfoListComponent } from './components/mock-room-info-list/mock
 @NgModule({
   declarations: [
     AppComponent,
-    ButtonComponent,
     RoomComponent,
     LoginComponent,
     LobbyComponent,
