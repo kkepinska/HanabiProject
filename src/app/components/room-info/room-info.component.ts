@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { RoomInfo } from 'src/app/model/RoomInfo';
 import { RoomInfoListComponent } from '../room-info-list/room-info-list.component';
+import { FormatterService } from 'src/app/service/formatter.service';
 
 @Component({
   selector: 'app-room-info',
@@ -14,7 +15,8 @@ export class RoomInfoComponent {
   @Input() playerName?: string;
 
   constructor(
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly formatterService: FormatterService
   ) {}
 
   joinRoom() {
@@ -26,6 +28,6 @@ export class RoomInfoComponent {
   }
 
   public getModeName(mode: string): string | undefined {
-    return RoomInfoListComponent.MODE_TO_MODE_NAME.get(mode)
+    return this.formatterService.getModeName(mode)
   }
 }

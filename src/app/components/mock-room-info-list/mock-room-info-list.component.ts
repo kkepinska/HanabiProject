@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { RoomInfo } from '../../model/RoomInfo';
 import { RoomInfoListComponent } from '../room-info-list/room-info-list.component';
+import { FormatterService } from 'src/app/service/formatter.service';
 
 @Component({
   selector: 'app-mock-room-info-list',
@@ -68,16 +69,25 @@ export class MockRoomInfoListComponent {
     }
   ]
 
+  public constructor(
+    private readonly formatterService: FormatterService
+  ) {}
+  
   createNewRoom() {
     console.log('Creating new room')
   }
 
   public getGameModeNames(): Array<string> {
-    return Array.from(RoomInfoListComponent.MODE_NAME_TO_MODE.keys())
+    return this.formatterService.getGameModeNames()
+  }
+
+  public getModeName(mode: string): string | undefined {
+    return this.formatterService.getModeName(mode)
   }
 
   public setMode(modeName: string): void {
-    this.mode = RoomInfoListComponent.MODE_NAME_TO_MODE.get(modeName)
+    console.log("Setting mode", modeName)
+    this.mode = this.formatterService.getMode(modeName)
   }
 
   public getPlayerConuts(): Array<number> {

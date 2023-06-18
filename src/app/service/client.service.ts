@@ -55,13 +55,6 @@ export class ClientService {
     this.socket.emit('joinRoom', roomId, playerName);
   }
 
-  public getNewRoom() {
-    this.socket.on('newRoom', (roomInfo: RoomInfo) =>{
-      this.rooms$.next(roomInfo);
-    });
-    return this.rooms$.asObservable();
-  }
-
   public getJoinRoom() {
     this.socket.on('joinRoom', (updatedRoom: RoomInfo) =>{
         console.log('joinRoom received in service')

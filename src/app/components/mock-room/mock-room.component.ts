@@ -8,6 +8,7 @@ import { RoomInfo } from 'src/app/model/RoomInfo';
 import { action, discardStructure, hintStructure, playStructure } from 'src/app/model/action';
 import { color } from 'src/app/model/colors';
 import { FormatterService } from 'src/app/service/formatter.service';
+import { RoomInfoListComponent } from '../room-info-list/room-info-list.component';
 
 @Component({
   selector: 'app-mock-room',
@@ -28,7 +29,7 @@ export class MockRoomComponent {
         MockRoomComponent.PLAYER3
     ],
     isPublic : true,
-    mode: "basic"
+    mode: "hard_c"
   }
   private static GAME_INFO : GameInfo = {
     maxHints: 8,
@@ -213,6 +214,10 @@ export class MockRoomComponent {
     return this.formatterService.getLgClassName(colorName)
   }
 
+  public getModeName(mode: string): string | undefined {
+    return this.formatterService.getModeName(mode)
+  }
+  
   public navigateToLobby(): void {
     this.router.navigateByUrl('/mockLobby')
   }

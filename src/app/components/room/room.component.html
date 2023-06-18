@@ -11,7 +11,7 @@
                     {{ this.roomInfo.players }}
                 </div>
                 <div class="h2 text-secondary my-2">
-                    Game mode: {{ this.roomInfo.mode }}
+                    Game mode: {{ getModeName(this.roomInfo.mode) }}
                 </div>
                 <div class="h2 text-secondary my-4">
                     Waitnig for others to join...

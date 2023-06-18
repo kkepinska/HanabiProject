@@ -8,6 +8,7 @@ import { action } from 'src/app/model/action';
 import { ClientService } from 'src/app/service/client.service';
 import { FormatterService } from 'src/app/service/formatter.service';
 import { color } from 'src/app/model/colors'
+import { RoomInfoListComponent } from '../room-info-list/room-info-list.component';
 
 @Component({
   selector: 'app-room',
@@ -173,6 +174,10 @@ export class RoomComponent implements OnInit{
     return []
   }
 
+  public getModeName(mode: string): string | undefined {
+    return this.formatterService.getModeName(mode)
+  }
+  
   public getClassName(colorName: string): string {
     return this.formatterService.getClassName(colorName)
   }

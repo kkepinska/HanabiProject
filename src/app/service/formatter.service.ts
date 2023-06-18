@@ -6,6 +6,28 @@ import { color } from '../model/colors';
   providedIn: 'root'
 })
 export class FormatterService {
+   private static readonly MODE_NAME_TO_MODE = new Map([
+    ["basic", "basic"],
+    ["small", "small"],
+    ["rainbow", "rainbow"],
+    ["black", "black"],
+    ["rainbow critical", "rainbow_c"],
+    ["black critical", "black_c"],
+    ["rainbow + black", "hard"],
+    ["rainbow + black critical", "hard_c"] 
+  ])
+
+  private static readonly MODE_TO_MODE_NAME = new Map([
+    ["basic", "basic"],
+    ["small", "small"],
+    ["rainbow", "rainbow"],
+    ["black", "black"],
+    ["rainbow_c", "rainbow critical"],
+    ["black_c", "black critical"],
+    ["hard", "rainbow + black"],
+    ["hard_c", "rainbow + black critical"] 
+  ])
+
   private static readonly COLORS =  ['red', 'green', 'white', 'blue', 'yellow', 'rainbow', 'black']
 
   constructor() { }
@@ -38,6 +60,10 @@ export class FormatterService {
     return hintAction.player + ' gave ' + hintAction.receiver + ' a hint about ' + hintAction.type + ' ' + hintValue
   }
 
+  public getColorName(colorNumber: number): string {
+    return FormatterService.COLORS[colorNumber - 1]
+  }
+
   public getColorNames(colors: Array<color>): Array<string> {
     let arr: Array<string>
     arr = [];
@@ -57,8 +83,16 @@ export class FormatterService {
     return arr
   }
 
-  public getColorName(colorNumber: number): string {
-    return FormatterService.COLORS[colorNumber - 1]
+  public getModeName(mode: string): string | undefined {
+    return FormatterService.MODE_TO_MODE_NAME.get(mode)
+  }
+
+  public getMode(modeName: string): string | undefined {
+    return FormatterService.MODE_NAME_TO_MODE.get(modeName)
+  }
+
+  public getGameModeNames(): Array<string> {
+    return Array.from(FormatterService.MODE_NAME_TO_MODE.keys())
   }
 
   public getClassName(colorName: string): string {
