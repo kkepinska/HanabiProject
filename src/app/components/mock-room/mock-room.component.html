@@ -97,7 +97,7 @@
                         <div class="modal fade" style="overflow: hidden;" id={{player}} data-bs-keyboard="false" style="overflow-y: scroll;">
                             <div class="modal-dialog modal-xl">
                                 <div class="modal-content">
-                                    <div class="modal-header">
+                                    <div class="modal-header" style="height: 5vh; overflow-x: scroll; background-color: #e8f597 !important;">
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
                                     <div class="modal-body row" style="height: 75vh; overflow-x: scroll; background-color: #e8f597 !important;">
@@ -133,7 +133,7 @@
                                             </div>
                                         </ng-container>
                                     </div>
-                                <div class="modal-footer">
+                                <div class="modal-footer" style="background-color: #e8f597 !important;">
                                 </div>
                             </div>
                         </div>
@@ -225,12 +225,12 @@
 </ng-container>
 
 <div class="modal fade" style="overflow: hidden;" id="history-modal" data-bs-keyboard="false" style="overflow-y: scroll;">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog ">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body row" style="overflow-x: scroll; background-color: #e8f597 !important;">
+            <div class="modal-body row">
                 <ul class="col-12 list-group">
                     <ng-container *ngFor = "let action of gameState?.history;">
                         <div class="row">
